@@ -1,4 +1,4 @@
-using ScriptableObjects.Classes.Characters;
+using _Game.DrunkManSpawner.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,13 +12,15 @@ namespace Gameplay.Characters
 		[SerializeField] private ParticleSystem _stunParticle;
 		[SerializeField] private Transform _hideResourcePoint;
 		[SerializeField] protected NavMeshAgent _agent;
-		[SerializeField] protected CharacterData _characterData;
-
+		[SerializeField] protected DrunkManData _drunkManData;
+		
 		public Transform HideResourcePoint => _hideResourcePoint;
 		public CharacterAnimator CharAnimator => _animator;
-		public CharacterData Data => _characterData;
+		public DrunkManData Data => _drunkManData;
 		public NavMeshAgent Agent => _agent;
 		protected ParticleSystem StunParticle => _stunParticle;
 		protected bool IsArmed { get; set; }
+		
+		public void InitData(DrunkManData drunkManData) => _drunkManData = drunkManData;
 	}
 }

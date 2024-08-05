@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Mixer;
 using GameManager.LevelsLogic;
 using Object = UnityEngine.Object;
 
@@ -7,9 +8,14 @@ namespace _Game
 	public class GameLoop : IDisposable
 	{
 		private readonly LevelPresenter _levelPresenter;
+		private readonly BaseMixerUI _currentMixer;
 		private Level _currentLevel;
 
-		public GameLoop(LevelPresenter levelPresenter) => _levelPresenter = levelPresenter;
+		public GameLoop(LevelPresenter levelPresenter, BaseMixerUI mixerUI)
+		{
+			_levelPresenter = levelPresenter;
+			_currentMixer = mixerUI;
+		}
 
 		public void StartLevel()
 		{
@@ -24,6 +30,7 @@ namespace _Game
 			_levelPresenter.OnLevelLoaded -= InitLevelSystems;
 			_currentLevel = Object.FindObjectOfType<Level>();
 
+			_currentLevel.Init(_currentMixer);
 			Subscribe();
 		}
 

@@ -1,4 +1,5 @@
-﻿using GameManager.LevelsLogic;
+﻿using _Game.UI;
+using GameManager.LevelsLogic;
 using UnityEngine;
 
 namespace _Game
@@ -6,11 +7,13 @@ namespace _Game
 	public class GameEntryPoint : MonoBehaviour
 	{
 		[SerializeField] private LevelPresenter _levelPresenter;
+		[SerializeField] private MainGUI _mainGUI;
+		
 		
 
 		private void Start()
 		{
-			var gameLoop = new GameLoop(_levelPresenter);
+			var gameLoop = new GameLoop(_levelPresenter, _mainGUI.BaseMixerUI);
 			gameLoop.StartLevel();
 		}
 	}
