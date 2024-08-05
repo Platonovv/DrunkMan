@@ -7,13 +7,11 @@ namespace Gameplay.Characters
 	[SelectionBase]
 	public class CharacterBase : MonoBehaviour
 	{
-		[SerializeField] protected Rigidbody _rigidbody;
+		[SerializeField] private Rigidbody _rigidbody;
 		[SerializeField] private CharacterAnimator _animator;
-
 		[SerializeField] private ParticleSystem _stunParticle;
 		[SerializeField] private Transform _hideResourcePoint;
-		[SerializeField,] protected NavMeshAgent _agent;
-
+		[SerializeField] protected NavMeshAgent _agent;
 		[SerializeField] protected CharacterData _characterData;
 
 		public Transform HideResourcePoint => _hideResourcePoint;

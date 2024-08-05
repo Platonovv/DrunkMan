@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4732299673542856603}
+  - component: {fileID: 257030968639002254}
+  - component: {fileID: 1871622052897790851}
+  - component: {fileID: 8348278736547994295}
   m_Layer: 0
   m_Name: '[GameEntryPoint]'
   m_TagString: Untagged
@@ -31,3 +34,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &257030968639002254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8978874664749542351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d3d003fd3342d090441e7243af1daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelPresenter: {fileID: 1871622052897790851}
+  _gameLoop: {fileID: 8348278736547994295}
+--- !u!114 &1871622052897790851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8978874664749542351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5104f6bd3f474ba49c45f27bff615501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scenesContainer: {fileID: 11400000, guid: 9d6f377b3aea1bf469cbc182b5380f72, type: 2}
+--- !u!114 &8348278736547994295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8978874664749542351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3af4ada941457fa33d1b6b793563d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
