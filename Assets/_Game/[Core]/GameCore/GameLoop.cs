@@ -1,17 +1,54 @@
-﻿using GameManager.LevelsLogic;
-using UnityEngine;
+﻿using System;
+using GameManager.LevelsLogic;
+using Object = UnityEngine.Object;
 
-namespace _Game._Core_.GameCoreEntry
+namespace _Game
 {
-	public class GameLoop : MonoBehaviour
+	public class GameLoop : IDisposable
 	{
+		private readonly LevelPresenter _levelPresenter;
 		private Level _currentLevel;
 
-		public void Init(Level level)
+		public GameLoop(LevelPresenter levelPresenter) => _levelPresenter = levelPresenter;
+
+		public void StartLevel()
 		{
-			_currentLevel = level;
+			_levelPresenter.OnLevelLoaded += InitLevelSystems;
+			_levelPresenter.LoadLevel(default);
 		}
-		
-		//Здесь вин,дуз, рестарт
+
+		public void Dispose() => UnSubscribe();
+
+		private void InitLevelSystems()
+		{
+			_levelPresenter.OnLevelLoaded -= InitLevelSystems;
+			_currentLevel = Object.FindObjectOfType<Level>();
+
+			Subscribe();
+		}
+
+		private void Subscribe()
+		{
+			_currentLevel.OnLoseLevel += Lose;
+		}
+
+		private void UnSubscribe()
+		{
+			_currentLevel.OnLoseLevel -= Lose;
+		}
+
+		private void Win()
+		{
+		}
+
+		private void Lose()
+		{
+			//окно луза
+		}
+
+		private void Restart()
+		{
+			//окно луза
+		}
 	}
 }
