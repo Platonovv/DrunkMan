@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using _Game.DrunkManSpawner.Data;
 using _Tools;
-using Gameplay.Characters;
 using UnityEngine;
 
 namespace _Game.DrunkManSpawner
@@ -14,7 +13,6 @@ namespace _Game.DrunkManSpawner
 		[Header("Components")]
 		[SerializeField] private List<Transform> _spawnPoints;
 
-		private CharacterBase _currentDrunkMan;
 		private DrunkManFactory _drunkManFactory;
 		private List<DrunkManData> _drunkManData;
 
@@ -26,9 +24,12 @@ namespace _Game.DrunkManSpawner
 
 		private void SpawnRandomDrunkMan()
 		{
-			_currentDrunkMan = _drunkManFactory.GetDrunkMan();
-			_currentDrunkMan.SetPosition(_spawnPoints.GetRandomElement());
-			OnSpawnDrunkMan?.Invoke(_currentDrunkMan.transform);
+			_spawnPoints.ForEach(x => x.DestroyChildren());
+			var randomElement = _spawnPoints.GetRandomElement();
+			var drunkMan = _drunkManFactory.GetDrunkMan();
+			drunkMan.SetPosition(randomElement);
+			drunkMan.SetParent(randomElement);
+			OnSpawnDrunkMan?.Invoke(drunkMan.transform);
 		}
 	}
 }

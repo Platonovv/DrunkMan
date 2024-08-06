@@ -9,15 +9,9 @@ namespace _Game.Mixer
 
 		[SerializeField] private MixerView _mixerView;
 
-		private void Awake()
-		{
-			_mixerView.OnClickStart += StartLevel;
-		}
+		private void Awake() => _mixerView.OnClickStart += StartLevel;
 
-		private void OnDestroy()
-		{
-			_mixerView.OnClickStart -= StartLevel;
-		}
+		private void OnDestroy() => _mixerView.OnClickStart -= StartLevel;
 
 		private void StartLevel() => OnStartMixer?.Invoke();
 	}

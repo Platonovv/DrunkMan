@@ -41,13 +41,14 @@ namespace UI.MainMenu.GangPage.Dragged
 			if (eventData == default)
 				return;
 
-			if (eventData.pointerEnter != default && eventData.pointerEnter.TryGetComponent(out IDragSlotCollectionReceiver dragReceiver))
+			if (eventData.pointerEnter != default
+			    && eventData.pointerEnter.TryGetComponent(out IDragSlotCollectionReceiver dragReceiver))
 			{
 				dragReceiver.AddInCollection(DragCardIntermediary.BarIngredient);
 			}
 			else
 			{
-				ReturnItem();
+				//ReturnItem();
 			}
 
 			_ingredientDraggedView.EndDrag();
@@ -62,5 +63,7 @@ namespace UI.MainMenu.GangPage.Dragged
 
 			DragCardIntermediary = intermediary;
 		}
+
+		protected override void ReturnItem() => DragCardIntermediary.ReturnItem();
 	}
 }

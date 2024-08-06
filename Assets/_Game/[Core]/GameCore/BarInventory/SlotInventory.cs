@@ -1,5 +1,4 @@
-﻿using System;
-using _Game.BarCatalog;
+﻿using _Game.BarCatalog;
 using _Tools;
 using UI;
 using UI.MainMenu;
@@ -33,14 +32,52 @@ namespace _Game.BarInventory
 		{
 			_ingredientDraggedView = ingredientDraggedView;
 			_ingredientDraggedView.OnStartDrag += CheckState;
+			_ingredientDraggedView.OnSelectedItem += SelectedItem;
+			_ingredientDraggedView.OnReturnItem += ReturnItem;
 			_ingredientDraggedView.OnEndDrag += CheckState;
 		}
 
 		public void InitSlot(BarIngredient slotData)
 		{
 			Transform = transform;
-			UpdateSlot(slotData);
+			BarIngredient = slotData;
+			_count = slotData.CurrentCount;
 			ShowSlot(true);
+		}
+
+		public void ReturnItem()
+		{
+			if (BarIngredient == default)
+				return;
+
+			if (_ingredientDraggedView.CurrentSlotData != BarIngredient && BarIngredient.Selected)
+				return;
+
+			_count += 1;
+			_count = Mathf.Clamp(_count, 0, int.MaxValue);
+
+			if (BarIngredient.Price > 0)
+				ResourceHandler.AddResource(ResourceType.Money, BarIngredient.Price);
+
+			BarIngredient.SetCurrentCount(_count);
+			CheckTouch();
+			UpdateSlot();
+			SetAlfa();
+		}
+
+		public void SelectedItem()
+		{
+			if (BarIngredient == default)
+				return;
+
+			if (_ingredientDraggedView.CurrentSlotData != BarIngredient)
+				return;
+			
+			BarIngredient.SetSelected(true);
+			BarIngredient.SetCurrentCount(_count);
+			UpdateSlot();
+			SetAlfa();
+			CheckTouch();
 		}
 
 		private void Awake()
@@ -50,8 +87,13 @@ namespace _Game.BarInventory
 
 		private void OnDestroy()
 		{
-			_ingredientDraggedView.OnStartDrag -= CheckState;
-			_ingredientDraggedView.OnEndDrag -= CheckState;
+			if (_ingredientDraggedView != default)
+			{
+				_ingredientDraggedView.OnStartDrag -= CheckState;
+				_ingredientDraggedView.OnSelectedItem -= SelectedItem;
+				_ingredientDraggedView.OnReturnItem -= ReturnItem;
+				_ingredientDraggedView.OnEndDrag -= CheckState;
+			}
 
 			ResourceHandler.OnValueAdded -= ValueChanged;
 		}
@@ -61,18 +103,20 @@ namespace _Game.BarInventory
 			_activateSlot = activate;
 
 			if (_activateSlot)
+			{
+				UpdateSlot();
 				_slotCanvas.Show(_showDuration);
+			}
 			else
 				_slotCanvas.Hide();
 
-			CheckTouch(_activateSlot);
+			CheckTouch();
 		}
 
-		private void UpdateSlot(BarIngredient slotData)
+		private void UpdateSlot()
 		{
-			BarIngredient = slotData;
-			_count = slotData.Count;
-			_slotView.UpdateView(slotData);
+			_slotView.UpdateView(BarIngredient);
+			SetAlfa();
 		}
 
 		private void ValueChanged(ResourceType money, int value)
@@ -80,22 +124,23 @@ namespace _Game.BarInventory
 			if (BarIngredient == default)
 				return;
 
-			CheckTouch(_activateSlot);
-			SetAlfa();
+			CheckTouch();
 		}
 
-		private void CheckTouch(bool activate)
+		private void CheckTouch()
 		{
 			if (BarIngredient == default)
 				return;
-			
-			if (activate && IngredientAvailable && ResourceHandler.GetResourceCount(ResourceType.Money) >= BarIngredient.Price)
+
+			if (_activateSlot
+			    && IngredientAvailable
+			    && ResourceHandler.GetResourceCount(ResourceType.Money) >= BarIngredient.Price
+			    && !BarIngredient.Selected)
 			{
 				DraggedState = DraggedState.CanTouch;
 			}
 			else
 				DraggedState = DraggedState.CantTouch;
-			
 		}
 
 		private void CheckState(bool startDrag)
@@ -104,12 +149,17 @@ namespace _Game.BarInventory
 				return;
 
 			if (startDrag)
-				SetSelected();
-			else
-				SetDeSelected();
+				TakeItem();
+		}
 
-			_slotView.UpdateCount(_count);
+		private void TakeItem()
+		{
+			_count -= 1;
+			_count = Mathf.Clamp(_count, 0, int.MaxValue);
 
+			if (BarIngredient.Price > 0)
+				ResourceHandler.TrySubtractResource(ResourceType.Money, BarIngredient.Price);
+			
 			SetAlfa();
 		}
 
@@ -118,24 +168,6 @@ namespace _Game.BarInventory
 			var color = _currentImage.color;
 			color.a = IngredientAvailable ? 1f : 0.5f;
 			_currentImage.color = color;
-		}
-
-		private void SetSelected()
-		{
-			_count -= 1;
-			_count = Mathf.Clamp(_count, 0, int.MaxValue);
-
-			if (BarIngredient.Price > 0)
-				ResourceHandler.TrySubtractResource(ResourceType.Money, BarIngredient.Price);
-		}
-
-		private void SetDeSelected()
-		{
-			_count += 1;
-			_count = Mathf.Clamp(_count, 0, int.MaxValue);
-
-			if (BarIngredient.Price > 0)
-				ResourceHandler.AddResource(ResourceType.Money, BarIngredient.Price);
 		}
 	}
 }

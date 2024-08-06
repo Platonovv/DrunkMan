@@ -11,5 +11,7 @@ namespace _Game.BarCatalog
 
 		public List<BarIngredient> IngredientsForType(DirectionType directionType)
 			=> _barIngredients.Where(x => x.DirectionType == directionType).ToList();
+
+		public void ResetSelected() => _barIngredients.ForEach(x => x.SetSelected(false));
 	}
 }

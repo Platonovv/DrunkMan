@@ -8,5 +8,6 @@ namespace UI.MainMenu
 		public BarIngredient BarIngredient { get; set; }
 		public Transform Transform { get; set; }
 		public DraggedState DraggedState { get; set; }
+		public void ReturnItem();
 	}
 }

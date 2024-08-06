@@ -27,8 +27,14 @@ namespace _Game.BarInventory
 		{
 			_slotInventories.ForEach(x => x.InitDragView(_slotDraggedView));
 
+			ResetSelectedSlots();
 			SortInventory(DirectionType.Up);
 			ShowInventory(true);
+		}
+
+		public void ResetSelectedSlots()
+		{
+			_ingredientsCatalog.ResetSelected();
 		}
 
 		private void SetNormalScroll()
@@ -39,7 +45,6 @@ namespace _Game.BarInventory
 		private void SortInventory(DirectionType up)
 		{
 			_slotInventories.ForEach(x => x.HideSlot());
-
 			var availableSlot = _ingredientsCatalog.IngredientsForType(up);
 
 			for (var i = 0; i < availableSlot.Count; i++)
