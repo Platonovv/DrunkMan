@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _Game.BarCatalog;
 using _Tools;
+using UI.MainMenu.GangPage;
+using UI.MainMenu.GangPage.Dragged;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,11 +16,17 @@ namespace _Game.BarInventory
 		[SerializeField] private ScrollRect _scrollRect;
 		[SerializeField] private IngredientsCatalog _ingredientsCatalog;
 		[SerializeField] private List<SlotInventory> _slotInventories;
+		[Header("Handlers")]
+		[SerializeField] private List<BarIngredientCollectionDragHandler> _collectionDragHandlers;
+		[SerializeField] private IngredientDraggedView _slotDraggedView;
+
 		[Header("Settings")]
 		[SerializeField] private float _showDuration = 0.25f;
 
 		public void Init()
 		{
+			_slotInventories.ForEach(x => x.InitDragView(_slotDraggedView));
+
 			SortInventory(DirectionType.Up);
 			ShowInventory(true);
 		}
@@ -32,6 +39,7 @@ namespace _Game.BarInventory
 		private void SortInventory(DirectionType up)
 		{
 			_slotInventories.ForEach(x => x.HideSlot());
+
 			var availableSlot = _ingredientsCatalog.IngredientsForType(up);
 
 			for (var i = 0; i < availableSlot.Count; i++)
@@ -43,6 +51,7 @@ namespace _Game.BarInventory
 		private void Awake()
 		{
 			ShowInventory(false);
+			_collectionDragHandlers.ForEach(x => x.InitWeaponCardDraggedView(_slotDraggedView));
 
 			foreach (var pageInventory in _pageInventories)
 				pageInventory.OnClickPage += SortInventory;
