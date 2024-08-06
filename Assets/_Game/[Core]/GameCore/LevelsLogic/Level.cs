@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using _Game.BarCatalog;
 using _Game.BarInventory;
 using _Game.DrunkManSpawner;
@@ -30,23 +29,29 @@ namespace GameManager.LevelsLogic
 		{
 			_currentMixer = currentMixer;
 			_currentInventory = currentInventory;
-			_currentMixer.OnStartMixer += StarLevel;
+
+			_currentMixer.OnStartSpawn += StarLevel;
+			_currentMixer.OnStartMix += StartMixer;
 			_currentMixer.OnStartMove += StarMove;
 			_currentMixer.OnDrawPath += StartDrawPath;
+
 			_drunkManHandler.OnSpawnDrunkMan += SpawnDrunkMan;
 		}
 
 		private void OnDestroy()
 		{
-			_currentMixer.OnStartMixer -= StarLevel;
+			_currentMixer.OnStartSpawn -= StarLevel;
+			_currentMixer.OnStartMix -= StartMixer;
 			_currentMixer.OnStartMove -= StarMove;
 			_currentMixer.OnDrawPath -= StartDrawPath;
+
 			_drunkManHandler.OnSpawnDrunkMan -= SpawnDrunkMan;
 		}
 
 		private void StarLevel()
 		{
 			_currentInventory.Init();
+			_currentInventory.ShowInventory(true);
 			_drunkManHandler.StartSpawn(_drunkManData);
 		}
 
@@ -56,21 +61,27 @@ namespace GameManager.LevelsLogic
 			_currentDrunkMan.MoveAgent(barIngredient.WayPoints);
 		}
 
-		private void StartDrawPath(List<BarIngredient> barIngredients)
-		{
-			foreach (var barIngredient in barIngredients)
-				_currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
-		}
-
-		private void StarMove()
-		{
-			_currentDrunkMan.PlayAgent();
-		}
+		private void StarMove() => _currentDrunkMan.PlayAgent();
 
 		private void SpawnDrunkMan(CharacterBase characterBase)
 		{
+			if (_currentDrunkMan != default)
+				_currentDrunkMan.OnEndPath -= EndMix;
+
 			_currentDrunkMan = characterBase;
+			_currentDrunkMan.OnEndPath += EndMix;
 			FollowCamera(characterBase.transform);
+		}
+
+		private void StartMixer()
+		{
+			_currentInventory.ShowInventory(false);
+		}
+
+		private void EndMix()
+		{
+			_currentMixer.EndMix();
+			_currentInventory.ShowInventory(true);
 		}
 
 		private void FollowCamera(Transform followTransform)

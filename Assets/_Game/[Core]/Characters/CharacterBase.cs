@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.DrunkManSpawner.Data;
@@ -9,6 +10,8 @@ namespace Gameplay.Characters
 	[SelectionBase]
 	public class CharacterBase : MonoBehaviour
 	{
+		public event Action OnEndPath;
+
 		[Header("Components")]
 		[SerializeField] private Rigidbody _rigidbody;
 		[SerializeField] private CharacterAnimator _animator;
@@ -23,9 +26,6 @@ namespace Gameplay.Characters
 
 		private bool _isMove;
 		private bool _isMovingAgent;
-		public CharacterAnimator CharAnimator => _animator;
-		public DrunkManData Data => _drunkManData;
-		public NavMeshAgent Agent => _agent;
 		public void InitData(DrunkManData drunkManData) => _drunkManData = drunkManData;
 
 		public void SetPosition(Transform pos)
@@ -89,19 +89,24 @@ namespace Gameplay.Characters
 			if (!_isMove)
 				return;
 
-			if (_agent.remainingDistance < 0.05f && _currentWaypointIndex < _vector3S.Count)
-			{
+			if (_agent.remainingDistance < 0.01f && _currentWaypointIndex < _vector3S.Count)
 				SetNextWaypoint();
+
+			if (_agent.remainingDistance < 0.01f && !_agent.pathPending)
+			{
+				_isMove = false;
+				_worldWaypoints.Clear();
+				_vector3S.Clear();
+				_worldWaypoints.Add(transform.position);
+				OnEndPath?.Invoke();
+				Debug.Log("End PAth");
 			}
 		}
 
 		private void SetNextWaypoint()
 		{
 			if (_currentWaypointIndex >= _vector3S.Count)
-			{
-				_isMove = false;
 				return;
-			}
 
 			var vector3 = _vector3S[_currentWaypointIndex];
 			var worldWaypoint = transform.position + vector3;

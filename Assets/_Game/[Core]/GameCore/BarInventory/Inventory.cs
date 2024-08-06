@@ -29,12 +29,19 @@ namespace _Game.BarInventory
 
 			ResetSelectedSlots();
 			SortInventory(DirectionType.Up);
-			ShowInventory(true);
 		}
 
 		public void ResetSelectedSlots()
 		{
 			_ingredientsCatalog.ResetSelected();
+		}
+
+		public void ShowInventory(bool active)
+		{
+			if (active)
+				_canvasGroup.Show(_showDuration);
+			else
+				_canvasGroup.Hide();
 		}
 
 		private void SetNormalScroll()
@@ -66,14 +73,6 @@ namespace _Game.BarInventory
 		{
 			foreach (var pageInventory in _pageInventories)
 				pageInventory.OnClickPage -= SortInventory;
-		}
-
-		private void ShowInventory(bool active)
-		{
-			if (active)
-				_canvasGroup.Show(_showDuration);
-			else
-				_canvasGroup.Hide();
 		}
 	}
 }
