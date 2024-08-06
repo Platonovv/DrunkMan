@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using _Game.DrunkManSpawner.Data;
 using _Tools;
+using Gameplay.Characters;
 using UnityEngine;
 
 namespace _Game.DrunkManSpawner
 {
 	public class DrunkManHandler : MonoBehaviour
 	{
-		public event Action<Transform> OnSpawnDrunkMan;
+		public event Action<CharacterBase> OnSpawnDrunkMan;
 
 		[Header("Components")]
 		[SerializeField] private List<Transform> _spawnPoints;
@@ -29,7 +30,7 @@ namespace _Game.DrunkManSpawner
 			var drunkMan = _drunkManFactory.GetDrunkMan();
 			drunkMan.SetPosition(randomElement);
 			drunkMan.SetParent(randomElement);
-			OnSpawnDrunkMan?.Invoke(drunkMan.transform);
+			OnSpawnDrunkMan?.Invoke(drunkMan);
 		}
 	}
 }

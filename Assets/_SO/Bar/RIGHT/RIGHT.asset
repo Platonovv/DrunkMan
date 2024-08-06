@@ -10,10 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
-  m_Name: BarIngredientUP
+  m_Name: RIGHT
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 5ea654d1ef08c5843930a3a5a06109bd, type: 3}
-  _directionType: 1
+  _icon: {fileID: 21300000, guid: f3e13650ba219264fbc62e01bf7d87e3, type: 3}
+  _directionType: 3
   _resourceType: 0
-  _price: 0
+  _price: 20
   _count: 1
+  _wayPoints:
+  - {x: 1, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  - {x: 3, y: 0, z: 0}

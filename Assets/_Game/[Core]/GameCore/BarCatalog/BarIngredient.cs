@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UI;
 using UnityEngine;
 
@@ -12,11 +12,15 @@ namespace _Game.BarCatalog
 		[SerializeField] private ResourceType _resourceType;
 		[SerializeField] private int _price;
 		[SerializeField] private int _count;
+		
+		[Header("WayPoints")]
+		[SerializeField] private List<Vector3> _wayPoints;
 
 		private bool _selected;
 		public bool IngredientAvailable => CurrentCount > 0;
 		public Sprite Icon => _icon;
 		public DirectionType DirectionType => _directionType;
+		public List<Vector3> WayPoints => _wayPoints;
 		public int Price => _price;
 		public int CurrentCount { get; set; }
 		public ResourceType ResourceType => _resourceType;
@@ -25,5 +29,6 @@ namespace _Game.BarCatalog
 		public void SetCurrentCount(int count) => CurrentCount = count;
 		public void AddedCount(int value) => CurrentCount += value;
 		private void OnEnable() => SetCurrentCount(_count);
+		
 	}
 }
