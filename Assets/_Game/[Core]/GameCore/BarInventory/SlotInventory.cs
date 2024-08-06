@@ -19,9 +19,7 @@ namespace _Game.BarInventory
 		[SerializeField] private float _showDuration = 0.25f;
 
 		private IngredientDraggedView _ingredientDraggedView;
-		private int _count;
 		private bool _activateSlot;
-		private bool IngredientAvailable => _count > 0;
 		public BarIngredient BarIngredient { get; set; }
 		public Transform Transform { get; set; }
 		public DraggedState DraggedState { get; set; }
@@ -41,7 +39,6 @@ namespace _Game.BarInventory
 		{
 			Transform = transform;
 			BarIngredient = slotData;
-			_count = slotData.CurrentCount;
 			ShowSlot(true);
 		}
 
@@ -53,16 +50,13 @@ namespace _Game.BarInventory
 			if (_ingredientDraggedView.CurrentSlotData != BarIngredient && BarIngredient.Selected)
 				return;
 
-			_count += 1;
-			_count = Mathf.Clamp(_count, 0, int.MaxValue);
+			BarIngredient.AddedCount(1);
 
 			if (BarIngredient.Price > 0)
 				ResourceHandler.AddResource(ResourceType.Money, BarIngredient.Price);
 
-			BarIngredient.SetCurrentCount(_count);
 			CheckTouch();
 			UpdateSlot();
-			SetAlfa();
 		}
 
 		public void SelectedItem()
@@ -72,12 +66,10 @@ namespace _Game.BarInventory
 
 			if (_ingredientDraggedView.CurrentSlotData != BarIngredient)
 				return;
-			
+
 			BarIngredient.SetSelected(true);
-			BarIngredient.SetCurrentCount(_count);
-			UpdateSlot();
-			SetAlfa();
 			CheckTouch();
+			UpdateSlot();
 		}
 
 		private void Awake()
@@ -133,10 +125,11 @@ namespace _Game.BarInventory
 				return;
 
 			if (_activateSlot
-			    && IngredientAvailable
+			    && BarIngredient.IngredientAvailable
 			    && ResourceHandler.GetResourceCount(ResourceType.Money) >= BarIngredient.Price
 			    && !BarIngredient.Selected)
 			{
+				_currentImage.raycastTarget = true;
 				DraggedState = DraggedState.CanTouch;
 			}
 			else
@@ -154,19 +147,19 @@ namespace _Game.BarInventory
 
 		private void TakeItem()
 		{
-			_count -= 1;
-			_count = Mathf.Clamp(_count, 0, int.MaxValue);
+			_currentImage.raycastTarget = false;
+			BarIngredient.AddedCount(-1);
 
 			if (BarIngredient.Price > 0)
 				ResourceHandler.TrySubtractResource(ResourceType.Money, BarIngredient.Price);
-			
-			SetAlfa();
+
+			UpdateSlot();
 		}
 
 		private void SetAlfa()
 		{
 			var color = _currentImage.color;
-			color.a = IngredientAvailable ? 1f : 0.5f;
+			color.a = BarIngredient.IngredientAvailable ? 1f : 0.5f;
 			_currentImage.color = color;
 		}
 	}

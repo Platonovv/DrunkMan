@@ -14,16 +14,16 @@ namespace _Game.BarCatalog
 		[SerializeField] private int _count;
 
 		private bool _selected;
-		private int _currentCount;
-
+		public bool IngredientAvailable => CurrentCount > 0;
 		public Sprite Icon => _icon;
 		public DirectionType DirectionType => _directionType;
 		public int Price => _price;
-		public int CurrentCount => _currentCount;
+		public int CurrentCount { get; set; }
 		public ResourceType ResourceType => _resourceType;
 		public bool Selected => _selected;
 		public void SetSelected(bool selected) => _selected = selected;
-		public void SetCurrentCount(int count) => _currentCount = count;
+		public void SetCurrentCount(int count) => CurrentCount = count;
+		public void AddedCount(int value) => CurrentCount += value;
 		private void OnEnable() => SetCurrentCount(_count);
 	}
 }
