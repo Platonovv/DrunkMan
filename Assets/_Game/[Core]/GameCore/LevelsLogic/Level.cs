@@ -54,7 +54,6 @@ namespace GameManager.LevelsLogic
 		{
 			_currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
 			_currentDrunkMan.MoveAgent(barIngredient.WayPoints);
-			_currentDrunkMan.PlayAgent();
 		}
 
 		private void StartDrawPath(List<BarIngredient> barIngredients)

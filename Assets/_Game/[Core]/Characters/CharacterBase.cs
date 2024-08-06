@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.DrunkManSpawner.Data;
@@ -18,7 +17,10 @@ namespace Gameplay.Characters
 
 		private DrunkManData _drunkManData;
 		private int _currentWaypointIndex;
-		private List<Vector3> _vector3S;
+
+		private readonly List<Vector3> _vector3S = new();
+		private readonly List<Vector3> _worldWaypoints = new();
+
 		private bool _isMove;
 		private bool _isMovingAgent;
 		public CharacterAnimator CharAnimator => _animator;
@@ -30,6 +32,7 @@ namespace Gameplay.Characters
 		{
 			transform.position = pos.position;
 			_agent.enabled = true;
+			_worldWaypoints.Add(transform.position);
 		}
 
 		public void SetParent(Transform parent) => transform.SetParent(parent);
@@ -42,25 +45,16 @@ namespace Gameplay.Characters
 
 		public void SetLineRenderer(List<Vector3> vector3S)
 		{
-			_lineRenderer.startColor = Color.red;
-			_lineRenderer.endColor = Color.red;
-			_lineRenderer.startWidth = 0.1f;
-			_lineRenderer.endWidth = 0.1f;
-
-			List<Vector3> worldWaypoints = new List<Vector3>();
-
-			var startPos = transform.position;
-			Vector3 worldWaypointCalculate = startPos;
-			worldWaypoints.Add(startPos);
+			Vector3 worldWaypointCalculate = _worldWaypoints.Last();
 			foreach (var vector3 in vector3S)
 			{
 				worldWaypointCalculate += vector3;
-				worldWaypoints.Add(worldWaypointCalculate);
+				_worldWaypoints.Add(worldWaypointCalculate);
 			}
 
 			List<Vector3> pathPoints = new List<Vector3>();
 
-			foreach (Vector3 worldWaypoint in worldWaypoints)
+			foreach (Vector3 worldWaypoint in _worldWaypoints)
 			{
 				var path = new NavMeshPath();
 				if (_agent.CalculatePath(worldWaypoint, path))
@@ -77,8 +71,17 @@ namespace Gameplay.Characters
 		{
 			_isMove = true;
 			_currentWaypointIndex = default;
-			_vector3S = vector3S;
+			_vector3S.AddRange(vector3S);
 			SetNextWaypoint();
+			_agent.isStopped = true;
+		}
+
+		private void Awake()
+		{
+			_lineRenderer.startColor = Color.red;
+			_lineRenderer.endColor = Color.red;
+			_lineRenderer.startWidth = 0.1f;
+			_lineRenderer.endWidth = 0.1f;
 		}
 
 		private void Update()
@@ -86,7 +89,7 @@ namespace Gameplay.Characters
 			if (!_isMove)
 				return;
 
-			if (_agent.remainingDistance < 0.1f && _currentWaypointIndex < _vector3S.Count)
+			if (_agent.remainingDistance < 0.05f && _currentWaypointIndex < _vector3S.Count)
 			{
 				SetNextWaypoint();
 			}
