@@ -12,7 +12,6 @@ namespace _Game.DrunkManSpawner
 		public event Action<Transform> OnSpawnDrunkMan;
 
 		[Header("Components")]
-		[SerializeField] private CharacterBase _characterPrefab;
 		[SerializeField] private List<Transform> _spawnPoints;
 
 		private CharacterBase _currentDrunkMan;
@@ -27,10 +26,8 @@ namespace _Game.DrunkManSpawner
 
 		private void SpawnRandomDrunkMan()
 		{
-			var drunkManData = _drunkManFactory.GetDrunkManData();
-			_currentDrunkMan = Instantiate(_characterPrefab, _spawnPoints.GetRandomElement());
-			_currentDrunkMan.InitData(drunkManData);
-
+			_currentDrunkMan = _drunkManFactory.GetDrunkMan();
+			_currentDrunkMan.SetPosition(_spawnPoints.GetRandomElement());
 			OnSpawnDrunkMan?.Invoke(_currentDrunkMan.transform);
 		}
 	}

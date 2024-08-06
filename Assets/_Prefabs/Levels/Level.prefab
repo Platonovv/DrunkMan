@@ -192,7 +192,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 0
+    m_Time: 0.2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -438,7 +438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fac3e6f851a45c0b6b6d291a27e0841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 4942461281292096018, guid: 6f22fd4fd53422c4e8301f396e44765d, type: 3}
   _spawnPoints:
   - {fileID: 2986234234325396513}
 --- !u!1001 &2732654629896243339

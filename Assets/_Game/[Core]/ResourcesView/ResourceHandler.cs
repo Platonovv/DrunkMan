@@ -98,8 +98,6 @@ namespace UI
 
 	public enum ResourceType
 	{
-		Money,
-		Prisoner,
-		Star,
+		Money = 0,
 	}
 }

@@ -12,8 +12,9 @@ namespace Gameplay.Characters
 		[SerializeField] private ParticleSystem _stunParticle;
 		[SerializeField] private Transform _hideResourcePoint;
 		[SerializeField] protected NavMeshAgent _agent;
-		[SerializeField] protected DrunkManData _drunkManData;
 		
+		private DrunkManData _drunkManData;
+
 		public Transform HideResourcePoint => _hideResourcePoint;
 		public CharacterAnimator CharAnimator => _animator;
 		public DrunkManData Data => _drunkManData;
@@ -22,5 +23,7 @@ namespace Gameplay.Characters
 		protected bool IsArmed { get; set; }
 		
 		public void InitData(DrunkManData drunkManData) => _drunkManData = drunkManData;
+		
+		public void SetPosition(Transform pos) => transform.position = pos.position;
 	}
 }

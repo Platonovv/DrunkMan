@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c43ec1516d4bd09cd6a7a8bcdb0bd4, type: 3}
-  m_Name: DrunkMan
+  m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
+  m_Name: BarIngredientUP
   m_EditorClassIdentifier: 
-  _drunkManType: 1
-  _characterPrefab: {fileID: 4942461281292096018, guid: 6f22fd4fd53422c4e8301f396e44765d, type: 3}
+  _icon: {fileID: 21300000, guid: 5ea654d1ef08c5843930a3a5a06109bd, type: 3}
+  _directionType: 1
+  _resourceType: 0
+  _price: 0

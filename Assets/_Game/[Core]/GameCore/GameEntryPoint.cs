@@ -9,11 +9,10 @@ namespace _Game
 		[SerializeField] private LevelPresenter _levelPresenter;
 		[SerializeField] private MainGUI _mainGUI;
 		
-		
 
 		private void Start()
 		{
-			var gameLoop = new GameLoop(_levelPresenter, _mainGUI.BaseMixerUI);
+			var gameLoop = new GameLoop(_levelPresenter, _mainGUI);
 			gameLoop.StartLevel();
 		}
 	}

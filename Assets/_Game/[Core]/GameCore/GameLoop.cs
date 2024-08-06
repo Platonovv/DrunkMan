@@ -1,5 +1,8 @@
 ﻿using System;
+using _Game.BarCatalog;
+using _Game.BarInventory;
 using _Game.Mixer;
+using _Game.UI;
 using GameManager.LevelsLogic;
 using Object = UnityEngine.Object;
 
@@ -8,13 +11,17 @@ namespace _Game
 	public class GameLoop : IDisposable
 	{
 		private readonly LevelPresenter _levelPresenter;
+		private readonly IngredientsCatalog _ingredientsCatalog;
 		private readonly BaseMixerUI _currentMixer;
+		private readonly Inventory _currentInventory;
+
 		private Level _currentLevel;
 
-		public GameLoop(LevelPresenter levelPresenter, BaseMixerUI mixerUI)
+		public GameLoop(LevelPresenter levelPresenter, MainGUI mainGUI)
 		{
 			_levelPresenter = levelPresenter;
-			_currentMixer = mixerUI;
+			_currentMixer = mainGUI.BaseMixerUI;
+			_currentInventory = mainGUI.Inventory;
 		}
 
 		public void StartLevel()
@@ -30,7 +37,7 @@ namespace _Game
 			_levelPresenter.OnLevelLoaded -= InitLevelSystems;
 			_currentLevel = Object.FindObjectOfType<Level>();
 
-			_currentLevel.Init(_currentMixer);
+			_currentLevel.Init(_currentMixer, _currentInventory);
 			Subscribe();
 		}
 

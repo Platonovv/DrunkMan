@@ -6,23 +6,25 @@ using UnityEngine;
 
 namespace _Game.DrunkManSpawner
 {
-	public class DrunkManFactory : MonoBehaviour
+	public class DrunkManFactory
 	{
 		private readonly List<DrunkManData> _drunkManData;
 
-		public DrunkManFactory(List<DrunkManData> drunkManData)
-		{
-			_drunkManData = drunkManData;
-		}
+		public DrunkManFactory(List<DrunkManData> drunkManData) => _drunkManData = drunkManData;
 
-		public DrunkManData GetDrunkManData()
+		public CharacterBase GetDrunkMan()
 		{
-			switch (_drunkManData.GetRandomElement().DrunkManType)
+			var drunkManData = _drunkManData.GetRandomElement();
+			switch (drunkManData.DrunkManType)
 			{
 				case DrunkManType.Noting:
-					return ScriptableObject.CreateInstance<DrunkManData>();
+					return default;
 				case DrunkManType.Normal:
-					return ScriptableObject.CreateInstance<DrunkManData>();
+				case DrunkManType.Slow:
+				case DrunkManType.Fast:
+					var characterBase = Object.Instantiate(drunkManData.CharacterPrefab);
+					characterBase.InitData(drunkManData);
+					return characterBase;
 				default:
 					return default;
 			}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Gameplay.Characters;
+using UnityEngine;
 
 namespace _Game.DrunkManSpawner.Data
 {
@@ -6,13 +7,17 @@ namespace _Game.DrunkManSpawner.Data
 	public class DrunkManData : ScriptableObject
 	{
 		[SerializeField] private DrunkManType _drunkManType;
+		[SerializeField] private CharacterBase _characterPrefab;
 
 		public DrunkManType DrunkManType => _drunkManType;
+		public CharacterBase CharacterPrefab => _characterPrefab;
 	}
 
 	public enum DrunkManType
 	{
 		Noting = 0,
-		Normal = 1,
+		Slow = 1,
+		Normal = 2,
+		Fast = 3,
 	}
 }
