@@ -25,12 +25,13 @@ namespace Gameplay.Characters
 		private int _currentWaypointIndex;
 
 		private readonly List<Vector3> _worldWaypoints = new();
+		private readonly List<Vector3> _path = new();
+		private readonly Dictionary<int, int> _dictionaryPathCount = new();
 
 		private bool _isMove;
 		private bool _isMovingAgent;
 		private float _health;
-		private List<Vector3> _path;
-		private int _lastCount;
+		private int _currentPathIndex;
 
 		public void InitData(DrunkManData drunkManData)
 		{
@@ -53,9 +54,9 @@ namespace Gameplay.Characters
 
 		public void SetPosition(Transform pos)
 		{
+			ResetPath();
 			transform.position = pos.position;
 			_agent.enabled = true;
-			_worldWaypoints.Add(transform.position);
 		}
 
 		public void SetParent(Transform parent) => transform.SetParent(parent);
@@ -74,49 +75,6 @@ namespace Gameplay.Characters
 			SavePath(vector3S);
 		}
 
-		private void SavePath(List<Vector3> vector3S)
-		{
-			Vector3 worldWaypointCalculate = _worldWaypoints.Last();
-			foreach (var vector3 in vector3S)
-			{
-				worldWaypointCalculate += vector3;
-				_worldWaypoints.Add(worldWaypointCalculate);
-			}
-
-			List<Vector3> pathPoints = new List<Vector3>();
-
-			foreach (Vector3 worldWaypoint in _worldWaypoints)
-			{
-				var path = new NavMeshPath();
-				if (_agent.CalculatePath(worldWaypoint, path))
-				{
-					if (path.status == NavMeshPathStatus.PathComplete && path.corners.Length > 0)
-					{
-						var pathCorner = path.corners.ToList();
-						pathCorner.RemoveAt(0);
-						pathPoints.AddRange(pathCorner);
-					}
-				}
-				else if (NavMesh.SamplePosition(worldWaypoint, out var hitPos, 100.0f, NavMesh.AllAreas))
-				{
-					if (_agent.CalculatePath(hitPos.position, path))
-					{
-						if (path.corners.Length > 0)
-						{
-							var pathCorner = path.corners.ToList();
-							pathCorner.RemoveAt(0);
-							pathPoints.AddRange(pathCorner);
-						}
-					}
-				}
-			}
-
-			_path = pathPoints;
-			_lastCount = pathPoints.Count - _lastCount;
-			_lineRenderer.positionCount = _path.Count;
-			_lineRenderer.SetPositions(_path.ToArray());
-		}
-
 		public void MoveAgent()
 		{
 			_isMove = true;
@@ -124,25 +82,73 @@ namespace Gameplay.Characters
 			SetNextWaypoint();
 			_agent.isStopped = true;
 			_animator.DoDrink(true);
+			_currentPathIndex++;
 		}
 
 		public void ResetPath()
 		{
 			_path.Clear();
 			_worldWaypoints.Clear();
+			_dictionaryPathCount.Clear();
 			_lineRenderer.positionCount = default;
-
-			_worldWaypoints.Add(transform.position);
 		}
 
-		public void ClearLastPath()
+		public void ClearLastPath(List<Vector3> vector3S)
 		{
-			var indexDelete = _path.Count - _lastCount;
+			var lineRendererPositionCount = _dictionaryPathCount[_currentPathIndex];
+			if (_currentPathIndex > 0)
+			{
+				lineRendererPositionCount = _dictionaryPathCount[_currentPathIndex]
+				                            - _dictionaryPathCount[_currentPathIndex - 1];
+			}
 
+			_path.RemoveRange(_path.Count - lineRendererPositionCount, lineRendererPositionCount);
+			_lineRenderer.positionCount -= lineRendererPositionCount;
+			_dictionaryPathCount.Remove(_currentPathIndex);
+			
+			
+			var deleteCount = vector3S.Count;
+			var indexDelete = _worldWaypoints.Count - deleteCount;
+			
 			if (indexDelete >= 0)
-				_path.RemoveRange(indexDelete, _lastCount);
+				_worldWaypoints.RemoveRange(indexDelete, deleteCount);
+		}
 
-			_lineRenderer.positionCount -= _lastCount;
+		private void SavePath(List<Vector3> vector3S)
+		{
+			Vector3 worldWaypointCalculate = _worldWaypoints.LastOrDefault();
+
+			if (worldWaypointCalculate == default)
+				worldWaypointCalculate = transform.TransformPoint(transform.localPosition);
+
+			foreach (var vector3 in vector3S)
+			{
+				worldWaypointCalculate += vector3;
+				_worldWaypoints.Add(worldWaypointCalculate);
+			}
+
+			foreach (var worldWaypoint in _worldWaypoints)
+			{
+				var findWaypoint = worldWaypoint;
+				if (NavMesh.SamplePosition(worldWaypoint, out var hitPos, 100.0f, NavMesh.AllAreas))
+					findWaypoint = hitPos.position;
+
+				var path = new NavMeshPath();
+				var pathGenerate = NavMesh.CalculatePath(transform.position, findWaypoint, NavMesh.AllAreas, path);
+
+				if (!pathGenerate)
+					return;
+
+				foreach (var pathCorner in path.corners)
+				{
+					if (!_path.Contains(pathCorner))
+						_path.Add(pathCorner);
+				}
+			}
+
+			_lineRenderer.positionCount = _path.Count;
+			_lineRenderer.SetPositions(_path.ToArray());
+			_dictionaryPathCount.TryAdd(_currentPathIndex, _path.Count);
 		}
 
 		private void Awake()
