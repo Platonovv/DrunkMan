@@ -90,7 +90,9 @@ namespace Gameplay.Characters
 				{
 					if (path.status == NavMeshPathStatus.PathComplete && path.corners.Length > 0)
 					{
-						pathPoints.Add(path.corners.Last());
+						var pathCorner = path.corners.ToList();
+						pathCorner.RemoveAt(0);
+						pathPoints.AddRange(pathCorner);
 					}
 					else if (NavMesh.SamplePosition(worldWaypoint, out var hit, 100.0f, NavMesh.AllAreas))
 					{
