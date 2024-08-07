@@ -67,14 +67,47 @@ namespace Gameplay.Characters
 				var path = new NavMeshPath();
 				if (_agent.CalculatePath(worldWaypoint, path))
 				{
+					if (path.status == NavMeshPathStatus.PathComplete && path.corners.Length > 0)
+					{
+						pathPoints.Add(path.corners.Last());
+					}
+					else if (NavMesh.SamplePosition(worldWaypoint, out var hit, 100.0f, NavMesh.AllAreas))
+					{
+						pathPoints.Add(hit.position);
+					}
+				}
+				else if (NavMesh.SamplePosition(worldWaypoint, out var hit, 100.0f, NavMesh.AllAreas))
+				{
+					pathPoints.Add(hit.position);
+				}
+			}
+
+			_lineRenderer.positionCount = pathPoints.Count;
+			_lineRenderer.SetPositions(pathPoints.ToArray());
+		}
+
+		private void CalculatePath(List<Vector3> vector3S)
+		{
+			Vector3 worldWaypointCalculate = _worldWaypoints.Last();
+			foreach (var vector3 in vector3S)
+			{
+				worldWaypointCalculate += vector3;
+				_worldWaypoints.Add(worldWaypointCalculate);
+			}
+
+			List<Vector3> pathPoints = new List<Vector3>();
+
+			foreach (Vector3 worldWaypoint in _worldWaypoints)
+			{
+				var path = new NavMeshPath();
+				if (_agent.CalculatePath(worldWaypoint, path))
+				{
 					pathPoints.Add(path.corners.Last());
 				}
 			}
 
 			_lineRenderer.positionCount = pathPoints.Count;
 			_lineRenderer.SetPositions(pathPoints.ToArray());
-			
-			
 		}
 
 		public void MoveAgent(List<Vector3> vector3S)
@@ -99,7 +132,7 @@ namespace Gameplay.Characters
 		{
 			var deleteCount = vector3S.Count;
 			var indexDelete = _worldWaypoints.Count - deleteCount;
-			
+
 			if (indexDelete >= 0)
 				_worldWaypoints.RemoveRange(indexDelete, deleteCount);
 
