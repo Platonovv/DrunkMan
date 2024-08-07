@@ -105,13 +105,7 @@ namespace Gameplay.Characters
 						{
 							var pathCorner = path.corners.ToList();
 							pathCorner.RemoveAt(0);
-							foreach (var point in pathCorner)
-							{
-								if (NavMesh.SamplePosition(point, out var hit, 100.0f, NavMesh.AllAreas))
-								{
-									pathPoints.Add(hit.position);
-								}
-							}
+							pathPoints.AddRange(pathCorner);
 						}
 					}
 				}
