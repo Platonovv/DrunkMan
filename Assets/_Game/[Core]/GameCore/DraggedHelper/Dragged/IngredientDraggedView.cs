@@ -31,7 +31,7 @@ namespace UI.MainMenu.GangPage
 		public void SetDraggedView(BarIngredient slotData)
 		{
 			_currentSlotData = slotData;
-			_slotView.UpdateView(slotData);
+			_slotView.UpdateDraggedView(slotData);
 		}
 
 		public void Move(Vector2 eventDataDelta) => _weaponCardMoveRect.anchoredPosition += eventDataDelta;

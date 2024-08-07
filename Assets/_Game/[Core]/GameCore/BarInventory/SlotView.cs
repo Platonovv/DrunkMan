@@ -20,5 +20,9 @@ namespace _Game.BarInventory
 			_price.SetText($"{slotDataPrice}");
 			_count.SetText(slotData.CurrentCount.ToString());
 		}
+		public void UpdateDraggedView(BarIngredient slotData)
+		{
+			_image.sprite = slotData.IconDragged;
+		}
 	}
 }

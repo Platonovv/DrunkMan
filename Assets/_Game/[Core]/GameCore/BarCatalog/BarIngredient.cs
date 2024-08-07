@@ -8,6 +8,7 @@ namespace _Game.BarCatalog
 	public class BarIngredient : ScriptableObject
 	{
 		[SerializeField] private Sprite _icon;
+		[SerializeField] private Sprite _iconDragged;
 		[SerializeField] private DirectionType _directionType;
 		[SerializeField] private ResourceType _resourceType;
 		[SerializeField] private int _price;
@@ -19,6 +20,7 @@ namespace _Game.BarCatalog
 		private bool _selected;
 		public bool IngredientAvailable => CurrentCount > 0;
 		public Sprite Icon => _icon;
+		public Sprite IconDragged => _iconDragged;
 		public DirectionType DirectionType => _directionType;
 		public List<Vector3> WayPoints => _wayPoints;
 		public int Price => _price;

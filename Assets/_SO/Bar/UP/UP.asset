@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
   m_Name: UP
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 5ea654d1ef08c5843930a3a5a06109bd, type: 3}
+  _icon: {fileID: 21300000, guid: 34094ebd678bf8b49834418e1af279e5, type: 3}
+  _iconDragged: {fileID: 21300000, guid: 588013aa7c245014e897103cd749a04b, type: 3}
   _directionType: 1
   _resourceType: 0
   _price: 0

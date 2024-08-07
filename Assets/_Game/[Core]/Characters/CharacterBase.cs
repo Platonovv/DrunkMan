@@ -90,6 +90,7 @@ namespace Gameplay.Characters
 			_path.Clear();
 			_worldWaypoints.Clear();
 			_dictionaryPathCount.Clear();
+			_currentPathIndex = default;
 			_lineRenderer.positionCount = default;
 		}
 
