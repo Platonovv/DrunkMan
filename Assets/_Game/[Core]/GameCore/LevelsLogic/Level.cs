@@ -19,6 +19,8 @@ namespace GameManager.LevelsLogic
 		[SerializeField] private List<DrunkManData> _drunkManData;
 		[SerializeField] private CinemachineVirtualCamera _followCamera;
 		[SerializeField] private DrunkManHandler _drunkManHandler;
+		[SerializeField] private WinCircle _winCircle;
+		
 
 		private BaseMixerUI _currentMixer;
 		private DrunkManFactory _drunkFactory;
@@ -30,6 +32,16 @@ namespace GameManager.LevelsLogic
 			_currentMixer = currentMixer;
 			_currentInventory = currentInventory;
 
+			Subscribe();
+		}
+
+		private void OnDestroy()
+		{
+			UnSubscribe();
+		}
+
+		private void Subscribe()
+		{
 			_currentMixer.OnStartSpawn += StarLevel;
 			_currentMixer.OnStartMix += StartMixer;
 			_currentMixer.OnStartMove += StarMove;
@@ -38,9 +50,11 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnHideVisualPath += HideVisualDrawPath;
 
 			_drunkManHandler.OnSpawnDrunkMan += SpawnDrunkMan;
+
+			_winCircle.OnWinLevel += Win;
 		}
 
-		private void OnDestroy()
+		private void UnSubscribe()
 		{
 			_currentMixer.OnStartSpawn -= StarLevel;
 			_currentMixer.OnStartMix -= StartMixer;
@@ -50,7 +64,12 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnHideVisualPath -= HideVisualDrawPath;
 
 			_drunkManHandler.OnSpawnDrunkMan -= SpawnDrunkMan;
+			
+			_winCircle.OnWinLevel -= Win;
 		}
+
+		private void Win() => OnWinLevel?.Invoke();
+		private void Lose() => OnLoseLevel?.Invoke();
 
 		private void StarLevel()
 		{
@@ -73,10 +92,14 @@ namespace GameManager.LevelsLogic
 		private void SpawnDrunkMan(CharacterBase characterBase)
 		{
 			if (_currentDrunkMan != default)
+			{
 				_currentDrunkMan.OnEndPath -= EndMix;
+				_currentDrunkMan.OnDeath -= Lose;
+			}
 
 			_currentDrunkMan = characterBase;
 			_currentDrunkMan.OnEndPath += EndMix;
+			_currentDrunkMan.OnDeath += Lose;
 			FollowCamera(characterBase.transform);
 		}
 

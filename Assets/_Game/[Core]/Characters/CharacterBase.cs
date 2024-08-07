@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.DrunkManSpawner.Data;
+using UI.ProgressBars;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,9 +11,11 @@ namespace Gameplay.Characters
 	[SelectionBase]
 	public class CharacterBase : MonoBehaviour
 	{
+		public event Action OnDeath;
 		public event Action OnEndPath;
 
 		[Header("Components")]
+		[SerializeField] private ProgressBar _healthBar;
 		[SerializeField] private Rigidbody _rigidbody;
 		[SerializeField] private CharacterAnimator _animator;
 		[SerializeField] private LineRenderer _lineRenderer;
@@ -26,7 +29,25 @@ namespace Gameplay.Characters
 
 		private bool _isMove;
 		private bool _isMovingAgent;
-		public void InitData(DrunkManData drunkManData) => _drunkManData = drunkManData;
+		private float _health;
+
+		public void InitData(DrunkManData drunkManData)
+		{
+			_drunkManData = drunkManData;
+			_health = drunkManData.Health;
+
+			_healthBar.SetMaxValue(_health, true);
+			_agent.speed = drunkManData.Speed;
+		}
+
+		public void TakeDamage(float value)
+		{
+			_health = Mathf.Clamp(_health - value, 0, _drunkManData.Health);
+			_healthBar.SetValue(_health);
+
+			if (_health <= 0 && _health < _drunkManData.Health)
+				OnDeath?.Invoke();
+		}
 
 		public void SetPosition(Transform pos)
 		{

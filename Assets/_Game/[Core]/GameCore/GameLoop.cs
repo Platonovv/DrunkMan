@@ -14,12 +14,14 @@ namespace _Game
 		private readonly IngredientsCatalog _ingredientsCatalog;
 		private readonly BaseMixerUI _currentMixer;
 		private readonly Inventory _currentInventory;
+		private readonly MainGUI _mainGUI;
 
 		private Level _currentLevel;
 
 		public GameLoop(LevelPresenter levelPresenter, MainGUI mainGUI)
 		{
 			_levelPresenter = levelPresenter;
+			_mainGUI = mainGUI;
 			_currentMixer = mainGUI.BaseMixerUI;
 			_currentInventory = mainGUI.Inventory;
 		}
@@ -43,26 +45,42 @@ namespace _Game
 
 		private void Subscribe()
 		{
+			_currentLevel.OnWinLevel += Win;
 			_currentLevel.OnLoseLevel += Lose;
+
+			_mainGUI.OnContinueLevel += ContinueLogic;
 		}
 
 		private void UnSubscribe()
 		{
+			_currentLevel.OnWinLevel -= Win;
 			_currentLevel.OnLoseLevel -= Lose;
+
+			_mainGUI.OnContinueLevel -= ContinueLogic;
 		}
 
 		private void Win()
 		{
+			_mainGUI.ShowWin();
 		}
 
 		private void Lose()
 		{
-			//окно луза
+			_mainGUI.ShowLose();
 		}
 
-		private void Restart()
+		private void ContinueLogic(bool continueLevel)
 		{
-			//окно луза
+			_mainGUI.HideScreens();
+
+			if (continueLevel)
+				_currentMixer.ContinueLevel();
+			else
+			{
+				Object.Destroy(_currentLevel);
+				_currentMixer.ResetLevel();
+				StartLevel();
+			}
 		}
 	}
 }

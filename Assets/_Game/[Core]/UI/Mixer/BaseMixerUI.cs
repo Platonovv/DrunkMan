@@ -42,14 +42,14 @@ namespace _Game.Mixer
 
 		private void Awake()
 		{
-			_startButton.onClick.AddListener(StartLevel);
+			_startButton.onClick.AddListener(ContinueLevel);
 			_startMix.onClick.AddListener(StartMix);
 			_mixerTrigger.OnAddCollection += AddInCollection;
 		}
 
 		private void OnDestroy()
 		{
-			_startButton.onClick.RemoveListener(StartLevel);
+			_startButton.onClick.RemoveListener(ContinueLevel);
 			_startMix.onClick.RemoveListener(StartMix);
 			_mixerTrigger.OnAddCollection -= AddInCollection;
 		}
@@ -62,12 +62,14 @@ namespace _Game.Mixer
 
 		public void EndMix() => _isStartMix = false;
 
-		private void StartMove() => OnStartMove?.Invoke();
-
-		private void StartLevel()
+		public void ContinueLevel()
 		{
 			_startButton.Deactivate();
 			OnStartSpawn?.Invoke();
 		}
+
+		public void ResetLevel() => _startButton.Activate();
+
+		private void StartMove() => OnStartMove?.Invoke();
 	}
 }
