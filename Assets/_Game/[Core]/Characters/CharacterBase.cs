@@ -24,12 +24,13 @@ namespace Gameplay.Characters
 		private DrunkManData _drunkManData;
 		private int _currentWaypointIndex;
 
-		private readonly List<Vector3> _vector3S = new();
 		private readonly List<Vector3> _worldWaypoints = new();
 
 		private bool _isMove;
 		private bool _isMovingAgent;
 		private float _health;
+		private List<Vector3> _path;
+		private int _lastCount;
 
 		public void InitData(DrunkManData drunkManData)
 		{
@@ -95,50 +96,37 @@ namespace Gameplay.Characters
 						pathCorner.RemoveAt(0);
 						pathPoints.AddRange(pathCorner);
 					}
-					else if (NavMesh.SamplePosition(worldWaypoint, out var hit, 100.0f, NavMesh.AllAreas))
+				}
+				else if (NavMesh.SamplePosition(worldWaypoint, out var hitPos, 100.0f, NavMesh.AllAreas))
+				{
+					if (_agent.CalculatePath(hitPos.position, path))
 					{
-						pathPoints.Add(hit.position);
+						if (path.corners.Length > 0)
+						{
+							var pathCorner = path.corners.ToList();
+							pathCorner.RemoveAt(0);
+							foreach (var point in pathCorner)
+							{
+								if (NavMesh.SamplePosition(point, out var hit, 100.0f, NavMesh.AllAreas))
+								{
+									pathPoints.Add(hit.position);
+								}
+							}
+						}
 					}
 				}
-				else if (NavMesh.SamplePosition(worldWaypoint, out var hit, 100.0f, NavMesh.AllAreas))
-				{
-					pathPoints.Add(hit.position);
-				}
 			}
 
-			_lineRenderer.positionCount = pathPoints.Count;
-			_lineRenderer.SetPositions(pathPoints.ToArray());
+			_path = pathPoints;
+			_lastCount = pathPoints.Count - _lastCount;
+			_lineRenderer.positionCount = _path.Count;
+			_lineRenderer.SetPositions(_path.ToArray());
 		}
 
-		private void CalculatePath(List<Vector3> vector3S)
-		{
-			Vector3 worldWaypointCalculate = _worldWaypoints.Last();
-			foreach (var vector3 in vector3S)
-			{
-				worldWaypointCalculate += vector3;
-				_worldWaypoints.Add(worldWaypointCalculate);
-			}
-
-			List<Vector3> pathPoints = new List<Vector3>();
-
-			foreach (Vector3 worldWaypoint in _worldWaypoints)
-			{
-				var path = new NavMeshPath();
-				if (_agent.CalculatePath(worldWaypoint, path))
-				{
-					pathPoints.Add(path.corners.Last());
-				}
-			}
-
-			_lineRenderer.positionCount = pathPoints.Count;
-			_lineRenderer.SetPositions(pathPoints.ToArray());
-		}
-
-		public void MoveAgent(List<Vector3> vector3S)
+		public void MoveAgent()
 		{
 			_isMove = true;
 			_currentWaypointIndex = default;
-			_vector3S.AddRange(vector3S);
 			SetNextWaypoint();
 			_agent.isStopped = true;
 			_animator.DoDrink(true);
@@ -146,21 +134,21 @@ namespace Gameplay.Characters
 
 		public void ResetPath()
 		{
+			_path.Clear();
 			_worldWaypoints.Clear();
-			_vector3S.Clear();
 			_lineRenderer.positionCount = default;
+
 			_worldWaypoints.Add(transform.position);
 		}
 
-		public void ClearLastPath(List<Vector3> vector3S)
+		public void ClearLastPath()
 		{
-			var deleteCount = vector3S.Count;
-			var indexDelete = _worldWaypoints.Count - deleteCount;
+			var indexDelete = _path.Count - _lastCount;
 
 			if (indexDelete >= 0)
-				_worldWaypoints.RemoveRange(indexDelete, deleteCount);
+				_path.RemoveRange(indexDelete, _lastCount);
 
-			_lineRenderer.positionCount -= vector3S.Count;
+			_lineRenderer.positionCount -= _lastCount;
 		}
 
 		private void Awake()
@@ -176,7 +164,7 @@ namespace Gameplay.Characters
 			if (!_isMove)
 				return;
 
-			if (_agent.remainingDistance < 0.01f && _currentWaypointIndex < _vector3S.Count)
+			if (_agent.remainingDistance < 0.01f && _currentWaypointIndex < _path.Count)
 				SetNextWaypoint();
 
 			if (_agent.remainingDistance < 0.01f && !_agent.pathPending)
@@ -191,12 +179,11 @@ namespace Gameplay.Characters
 
 		private void SetNextWaypoint()
 		{
-			if (_currentWaypointIndex >= _vector3S.Count)
+			if (_currentWaypointIndex >= _path.Count)
 				return;
 
-			var vector3 = _vector3S[_currentWaypointIndex];
-			var worldWaypoint = transform.position + vector3;
-			_agent.SetDestination(worldWaypoint);
+			var vector3 = _path[_currentWaypointIndex];
+			_agent.SetDestination(vector3);
 			_currentWaypointIndex++;
 		}
 	}

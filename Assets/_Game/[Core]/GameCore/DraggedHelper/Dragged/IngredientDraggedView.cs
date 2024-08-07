@@ -13,7 +13,7 @@ namespace UI.MainMenu.GangPage
 		public event Action OnReturnItem;
 		public event Action<bool> OnEndDrag;
 		public event Action<BarIngredient> OnShowVisualPath;
-		public event Action<BarIngredient> OnHideVisualPath;
+		public event Action OnHideVisualPath;
 
 		[Header("Components")]
 		[SerializeField] private CanvasGroup _canvasGroup;
@@ -64,7 +64,7 @@ namespace UI.MainMenu.GangPage
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 			_canvasGroup.Hide();
 			OnReturnItem?.Invoke();
-			OnHideVisualPath?.Invoke(CurrentSlotData);
+			OnHideVisualPath?.Invoke();
 		}
 	}
 }

@@ -82,10 +82,10 @@ namespace GameManager.LevelsLogic
 		private void ShowShowVisualDrawPath(BarIngredient barIngredient)
 			=> _currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
 
-		private void StartAgent(BarIngredient barIngredient) => _currentDrunkMan.MoveAgent(barIngredient.WayPoints);
+		private void StartAgent() => _currentDrunkMan.MoveAgent();
 
-		private void HideVisualDrawPath(BarIngredient barIngredient)
-			=> _currentDrunkMan.ClearLastPath(barIngredient.WayPoints);
+		private void HideVisualDrawPath()
+			=> _currentDrunkMan.ClearLastPath();
 
 		private void StarMove() => _currentDrunkMan.PlayAgent();
 
