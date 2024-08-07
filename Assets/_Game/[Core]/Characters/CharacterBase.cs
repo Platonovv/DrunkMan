@@ -37,6 +37,7 @@ namespace Gameplay.Characters
 			_health = drunkManData.Health;
 
 			_healthBar.SetMaxValue(_health, true);
+			_healthBar.SetValue(_health);
 			_agent.speed = drunkManData.Speed;
 		}
 

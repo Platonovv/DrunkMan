@@ -25,6 +25,7 @@ namespace GameManager.LevelsLogic
 		private DrunkManFactory _drunkFactory;
 		private Inventory _currentInventory;
 		private CharacterBase _currentDrunkMan;
+		public CinemachineVirtualCamera FollowCamera1 => _followCamera;
 
 		public void Init(BaseMixerUI currentMixer, Inventory currentInventory)
 		{
