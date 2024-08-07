@@ -12,6 +12,8 @@ namespace UI.MainMenu.GangPage
 		public event Action OnSelectedItem;
 		public event Action OnReturnItem;
 		public event Action<bool> OnEndDrag;
+		public event Action<BarIngredient> OnShowVisualPath;
+		public event Action<BarIngredient> OnHideVisualPath;
 
 		[Header("Components")]
 		[SerializeField] private CanvasGroup _canvasGroup;
@@ -41,6 +43,7 @@ namespace UI.MainMenu.GangPage
 			_rigidbody2D.transform.eulerAngles = Vector3.zero;
 			_canvasGroup.Show();
 			OnStartDrag?.Invoke(true);
+			OnShowVisualPath?.Invoke(CurrentSlotData);
 		}
 
 		public void EndDrag()
@@ -61,6 +64,7 @@ namespace UI.MainMenu.GangPage
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 			_canvasGroup.Hide();
 			OnReturnItem?.Invoke();
+			OnHideVisualPath?.Invoke(CurrentSlotData);
 		}
 	}
 }

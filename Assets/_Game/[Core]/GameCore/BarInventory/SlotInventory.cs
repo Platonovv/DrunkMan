@@ -47,7 +47,10 @@ namespace _Game.BarInventory
 			if (BarIngredient == default)
 				return;
 
-			if (_ingredientDraggedView.CurrentSlotData != BarIngredient && BarIngredient.Selected)
+			if (_ingredientDraggedView.CurrentSlotData != BarIngredient)
+				return;
+
+			if (BarIngredient.Selected)
 				return;
 
 			BarIngredient.AddedCount(1);

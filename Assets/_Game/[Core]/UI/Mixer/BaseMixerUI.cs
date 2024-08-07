@@ -14,7 +14,7 @@ namespace _Game.Mixer
 		public event Action OnStartSpawn;
 		public event Action OnStartMix;
 		public event Action OnStartMove;
-		public event Action<BarIngredient> OnDrawPath;
+		public event Action<BarIngredient> OnStartAgent;
 
 		[SerializeField] private Button _startButton;
 		[SerializeField] private Button _startMix;
@@ -29,7 +29,7 @@ namespace _Game.Mixer
 			if (!_barIngredients.Contains(slotData))
 				_barIngredients.Add(slotData);
 
-			OnDrawPath?.Invoke(slotData);
+			OnStartAgent?.Invoke(slotData);
 		}
 
 		public void OnPointerMove(PointerEventData eventData)

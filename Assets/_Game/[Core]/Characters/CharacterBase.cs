@@ -45,6 +45,11 @@ namespace Gameplay.Characters
 
 		public void SetLineRenderer(List<Vector3> vector3S)
 		{
+			SavePath(vector3S);
+		}
+
+		private void SavePath(List<Vector3> vector3S)
+		{
 			Vector3 worldWaypointCalculate = _worldWaypoints.Last();
 			foreach (var vector3 in vector3S)
 			{
@@ -76,6 +81,25 @@ namespace Gameplay.Characters
 			_agent.isStopped = true;
 		}
 
+		public void ResetPath()
+		{
+			_worldWaypoints.Clear();
+			_vector3S.Clear();
+			_lineRenderer.positionCount = default;
+			_worldWaypoints.Add(transform.position);
+		}
+
+		public void ClearLastPath(List<Vector3> vector3S)
+		{
+			var deleteCount = vector3S.Count;
+			var indexDelete = _worldWaypoints.Count - deleteCount;
+			
+			if (indexDelete >= 0)
+				_worldWaypoints.RemoveRange(indexDelete, deleteCount);
+
+			_lineRenderer.positionCount -= vector3S.Count;
+		}
+
 		private void Awake()
 		{
 			_lineRenderer.startColor = Color.red;
@@ -95,9 +119,7 @@ namespace Gameplay.Characters
 			if (_agent.remainingDistance < 0.01f && !_agent.pathPending)
 			{
 				_isMove = false;
-				_worldWaypoints.Clear();
-				_vector3S.Clear();
-				_worldWaypoints.Add(transform.position);
+				ResetPath();
 				OnEndPath?.Invoke();
 				Debug.Log("End PAth");
 			}

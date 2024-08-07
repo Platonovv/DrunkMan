@@ -33,7 +33,9 @@ namespace GameManager.LevelsLogic
 			_currentMixer.OnStartSpawn += StarLevel;
 			_currentMixer.OnStartMix += StartMixer;
 			_currentMixer.OnStartMove += StarMove;
-			_currentMixer.OnDrawPath += StartDrawPath;
+			_currentMixer.OnStartAgent += StartAgent;
+			_currentInventory.SlotDraggedView.OnShowVisualPath += ShowShowVisualDrawPath;
+			_currentInventory.SlotDraggedView.OnHideVisualPath += HideVisualDrawPath;
 
 			_drunkManHandler.OnSpawnDrunkMan += SpawnDrunkMan;
 		}
@@ -43,7 +45,9 @@ namespace GameManager.LevelsLogic
 			_currentMixer.OnStartSpawn -= StarLevel;
 			_currentMixer.OnStartMix -= StartMixer;
 			_currentMixer.OnStartMove -= StarMove;
-			_currentMixer.OnDrawPath -= StartDrawPath;
+			_currentMixer.OnStartAgent -= StartAgent;
+			_currentInventory.SlotDraggedView.OnShowVisualPath -= ShowShowVisualDrawPath;
+			_currentInventory.SlotDraggedView.OnHideVisualPath -= HideVisualDrawPath;
 
 			_drunkManHandler.OnSpawnDrunkMan -= SpawnDrunkMan;
 		}
@@ -55,11 +59,14 @@ namespace GameManager.LevelsLogic
 			_drunkManHandler.StartSpawn(_drunkManData);
 		}
 
-		private void StartDrawPath(BarIngredient barIngredient)
-		{
-			_currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
-			_currentDrunkMan.MoveAgent(barIngredient.WayPoints);
-		}
+		private void ShowShowVisualDrawPath(BarIngredient barIngredient)
+			=> _currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
+
+		private void StartAgent(BarIngredient barIngredient) 
+			=> _currentDrunkMan.MoveAgent(barIngredient.WayPoints);
+
+		private void HideVisualDrawPath(BarIngredient barIngredient)
+			=> _currentDrunkMan.ClearLastPath(barIngredient.WayPoints);
 
 		private void StarMove() => _currentDrunkMan.PlayAgent();
 

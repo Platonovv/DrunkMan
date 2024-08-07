@@ -23,6 +23,8 @@ namespace _Game.BarInventory
 		[Header("Settings")]
 		[SerializeField] private float _showDuration = 0.25f;
 
+		public IngredientDraggedView SlotDraggedView => _slotDraggedView;
+
 		public void Init()
 		{
 			_slotInventories.ForEach(x => x.InitDragView(_slotDraggedView));
