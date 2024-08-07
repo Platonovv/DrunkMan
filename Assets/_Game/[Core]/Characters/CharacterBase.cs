@@ -39,8 +39,11 @@ namespace Gameplay.Characters
 
 		public void PlayAgent()
 		{
-			_isMovingAgent = !_isMovingAgent;
-			_agent.isStopped = _isMovingAgent;
+			/*_isMovingAgent = !_isMovingAgent;
+			_agent.isStopped = _isMovingAgent;*/
+
+			_agent.isStopped = false;
+			_animator.DoMove(true);
 		}
 
 		public void SetLineRenderer(List<Vector3> vector3S)
@@ -70,6 +73,8 @@ namespace Gameplay.Characters
 
 			_lineRenderer.positionCount = pathPoints.Count;
 			_lineRenderer.SetPositions(pathPoints.ToArray());
+			
+			
 		}
 
 		public void MoveAgent(List<Vector3> vector3S)
@@ -79,6 +84,7 @@ namespace Gameplay.Characters
 			_vector3S.AddRange(vector3S);
 			SetNextWaypoint();
 			_agent.isStopped = true;
+			_animator.DoDrink(true);
 		}
 
 		public void ResetPath()
@@ -121,6 +127,7 @@ namespace Gameplay.Characters
 				_isMove = false;
 				ResetPath();
 				OnEndPath?.Invoke();
+				_animator.DoMove(false);
 				Debug.Log("End PAth");
 			}
 		}
