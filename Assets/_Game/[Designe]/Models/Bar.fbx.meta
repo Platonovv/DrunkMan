@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: 1-Loc
+    second: {fileID: 2100000, guid: 5a204c2f83e6dd94abe35d229b272f07, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Gradients.001
     second: {fileID: 2100000, guid: 6c214a85159be4447ae80861100a27c0, type: 2}
   materials:
