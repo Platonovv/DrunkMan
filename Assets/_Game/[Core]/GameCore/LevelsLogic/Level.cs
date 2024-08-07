@@ -19,8 +19,7 @@ namespace GameManager.LevelsLogic
 		[SerializeField] private List<DrunkManData> _drunkManData;
 		[SerializeField] private CinemachineVirtualCamera _followCamera;
 		[SerializeField] private DrunkManHandler _drunkManHandler;
-		[SerializeField] private WinCircle _winCircle;
-		
+		[SerializeField] private WinCircleHandler _winCircleHandler;
 
 		private BaseMixerUI _currentMixer;
 		private DrunkManFactory _drunkFactory;
@@ -51,7 +50,7 @@ namespace GameManager.LevelsLogic
 
 			_drunkManHandler.OnSpawnDrunkMan += SpawnDrunkMan;
 
-			_winCircle.OnWinLevel += Win;
+			_winCircleHandler.OnWinLevel += Win;
 		}
 
 		private void UnSubscribe()
@@ -64,8 +63,8 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnHideVisualPath -= HideVisualDrawPath;
 
 			_drunkManHandler.OnSpawnDrunkMan -= SpawnDrunkMan;
-			
-			_winCircle.OnWinLevel -= Win;
+
+			_winCircleHandler.OnWinLevel -= Win;
 		}
 
 		private void Win() => OnWinLevel?.Invoke();
@@ -76,13 +75,13 @@ namespace GameManager.LevelsLogic
 			_currentInventory.Init();
 			_currentInventory.ShowInventory(true);
 			_drunkManHandler.StartSpawn(_drunkManData);
+			_winCircleHandler.StartRandomCircle();
 		}
 
 		private void ShowShowVisualDrawPath(BarIngredient barIngredient)
 			=> _currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
 
-		private void StartAgent(BarIngredient barIngredient) 
-			=> _currentDrunkMan.MoveAgent(barIngredient.WayPoints);
+		private void StartAgent(BarIngredient barIngredient) => _currentDrunkMan.MoveAgent(barIngredient.WayPoints);
 
 		private void HideVisualDrawPath(BarIngredient barIngredient)
 			=> _currentDrunkMan.ClearLastPath(barIngredient.WayPoints);
