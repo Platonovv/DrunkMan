@@ -9,7 +9,7 @@ AnimatorOverrideController:
   m_Name: Cactus
   m_Controller: {fileID: 9100000, guid: 0cf6a284fb415f0458ce9ff6b4bdf089, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: -203655887218126122, guid: ed239ecbb7f4d9b4e961bcffe9aa3efb, type: 3}
-    m_OverrideClip: {fileID: -1048199598443711527, guid: 5e2675cb96339c847903902f10118bc9, type: 3}
   - m_OriginalClip: {fileID: -203655887218126122, guid: 56755c2ea1aaa6e4884e996258d0d2ea, type: 3}
-    m_OverrideClip: {fileID: 3685772192164050361, guid: 5e2675cb96339c847903902f10118bc9, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 21aa5e160534c294db9dd4510b29ab21, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: ed239ecbb7f4d9b4e961bcffe9aa3efb, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: a8673c2f3d45fc642ba6d9c2dd0986d7, type: 3}

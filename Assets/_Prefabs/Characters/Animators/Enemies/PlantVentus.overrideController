@@ -8,4 +8,8 @@ AnimatorOverrideController:
   m_PrefabAsset: {fileID: 0}
   m_Name: PlantVentus
   m_Controller: {fileID: 9100000, guid: 0cf6a284fb415f0458ce9ff6b4bdf089, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: -203655887218126122, guid: ed239ecbb7f4d9b4e961bcffe9aa3efb, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: c7e7d2be96b29b44e890a0ff8922a68c, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 56755c2ea1aaa6e4884e996258d0d2ea, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: aeab0a89343d2f04484901da284d81bc, type: 3}

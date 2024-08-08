@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Plant
   m_EditorClassIdentifier: 
   _health: 100
-  _speed: 3.5
+  _speed: 2
   _drunkManType: 2
   _characterPrefab: {fileID: 4351244234149188916, guid: 0416c0724a4a08346a6a6f924940cc04, type: 3}
