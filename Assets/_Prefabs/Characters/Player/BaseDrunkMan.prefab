@@ -149,7 +149,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2229277230978206518
@@ -340,6 +340,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 20432930111027781}
   _animator: {fileID: 3595901256643083786}
   _agent: {fileID: 7586414698185593254}
+  _remainingValue: 0.01
   _lineRenderer: {fileID: 8488121176895648562}
 --- !u!195 &7586414698185593254
 NavMeshAgent:

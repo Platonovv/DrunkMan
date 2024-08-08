@@ -8,6 +8,7 @@ using _Tools;
 using Cinemachine;
 using GameManager.LevelsLogic.Data;
 using Gameplay.Characters;
+using UI;
 using UnityEngine;
 
 namespace GameManager.LevelsLogic
@@ -73,7 +74,11 @@ namespace GameManager.LevelsLogic
 			_winCircleHandler.OnSpawnWinCircle -= SetQuest;
 		}
 
-		private void Win() => OnWinLevel?.Invoke();
+		private void Win()
+		{
+			ResourceHandler.AddResource(ResourceType.Money, (int) _currentDrunkMan.Health);
+			OnWinLevel?.Invoke();
+		}
 
 		private void Lose() => OnLoseLevel?.Invoke();
 
@@ -97,8 +102,12 @@ namespace GameManager.LevelsLogic
 
 		private void SetQuest(Sprite sprite, QuestData questData)
 		{
-			_mainGUIQuestView.SetQuest(sprite, questData);
+			_mainGUIQuestView.SetQuestImage(sprite);
+			UpdateQuestReward(questData.QuestReward);
+			_currentDrunkMan.InitHealForRewardQuest(questData.QuestReward);
 		}
+
+		private void UpdateQuestReward(float value) => _mainGUIQuestView.SetQuestReward(value);
 
 		private void SpawnSpawnCharacter(CharacterBase characterBase)
 		{
@@ -106,11 +115,13 @@ namespace GameManager.LevelsLogic
 			{
 				_currentDrunkMan.OnEndPath -= EndMix;
 				_currentDrunkMan.OnDeath -= Lose;
+				_currentDrunkMan.OnTakeDamage -= UpdateQuestReward;
 			}
 
 			_currentDrunkMan = characterBase;
 			_currentDrunkMan.OnEndPath += EndMix;
 			_currentDrunkMan.OnDeath += Lose;
+			_currentDrunkMan.OnTakeDamage += UpdateQuestReward;
 			//FollowCamera(characterBase.transform);
 			FollowMiniMap(characterBase.transform);
 		}

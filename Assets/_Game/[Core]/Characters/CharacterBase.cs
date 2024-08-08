@@ -12,6 +12,7 @@ namespace Gameplay.Characters
 	public class CharacterBase : MonoBehaviour
 	{
 		public event Action OnDeath;
+		public event Action<float> OnTakeDamage;
 		public event Action OnEndPath;
 
 		[Header("Components")]
@@ -31,15 +32,19 @@ namespace Gameplay.Characters
 		protected bool IsMove;
 		protected int CurrentPathIndex;
 		protected readonly List<Vector3> WorldWaypoints = new();
+		public float Health => _health;
 
 		public void InitData(CharacterData characterData)
 		{
 			_characterData = characterData;
-			_health = characterData.Health;
-
-			_healthBar.SetMaxValue(_health, true);
-			_healthBar.SetValue(_health);
 			_agent.speed = characterData.Speed;
+		}
+
+		public void InitHealForRewardQuest(int questDataQuestReward)
+		{
+			_health = questDataQuestReward;
+			_healthBar.SetMaxValue(questDataQuestReward, true);
+			_healthBar.SetValue(questDataQuestReward);
 		}
 
 		public void SetPosition(Transform pos)
@@ -51,12 +56,14 @@ namespace Gameplay.Characters
 
 		public void TakeDamage(float value)
 		{
-			_health = Mathf.Clamp(_health - value, 0, _characterData.Health);
+			_health = Mathf.Clamp(_health - value, 0, _healthBar.MaxValue);
 			_healthBar.SetValue(_health);
 			ResetPath();
 
-			if (_health <= 0 && _health < _characterData.Health)
+			if (_health <= 0 && _health < _healthBar.MaxValue)
 				OnDeath?.Invoke();
+			
+			OnTakeDamage?.Invoke(_healthBar.CurrentValue);
 		}
 
 		public void SetParent(Transform parent) => transform.SetParent(parent);
