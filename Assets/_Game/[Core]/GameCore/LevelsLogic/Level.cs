@@ -99,7 +99,7 @@ namespace GameManager.LevelsLogic
 			_currentDrunkMan = characterBase;
 			_currentDrunkMan.OnEndPath += EndMix;
 			_currentDrunkMan.OnDeath += Lose;
-			FollowCamera(characterBase.transform);
+			//FollowCamera(characterBase.transform);
 			FollowMiniMap(characterBase.transform);
 		}
 
