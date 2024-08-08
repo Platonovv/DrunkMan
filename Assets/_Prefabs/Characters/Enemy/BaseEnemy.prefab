@@ -372,6 +372,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 20432930111027781}
   _animator: {fileID: 0}
   _agent: {fileID: 7586414698185593254}
+  _remainingValue: 0.5
 --- !u!195 &7586414698185593254
 NavMeshAgent:
   m_ObjectHideFlags: 0

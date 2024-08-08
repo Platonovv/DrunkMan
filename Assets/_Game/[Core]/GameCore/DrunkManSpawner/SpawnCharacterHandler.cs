@@ -59,6 +59,8 @@ namespace _Game.DrunkManSpawner
 
 				enemy.SetPosition(randomElement.SpawnPos);
 				enemy.SetParent(randomElement.SpawnPos);
+				enemy.SetWaypoints(randomElement.EnemyWaypoints);
+				enemy.MoveAgent();
 				randomElement.SetBusy(true);
 			}
 		}

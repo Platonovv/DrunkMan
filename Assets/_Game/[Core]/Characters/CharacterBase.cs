@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Game.DrunkManSpawner.Data;
 using UI.ProgressBars;
 using UnityEngine;
@@ -19,8 +20,11 @@ namespace Gameplay.Characters
 		[SerializeField] protected CharacterAnimator _animator;
 		[SerializeField] protected NavMeshAgent _agent;
 
+		[Header("Settings")]
+		[SerializeField] private float _remainingValue = 0.01f;
+
 		private CharacterData _characterData;
-		private int _currentWaypointIndex;
+		protected int CurrentWaypointIndex;
 		private bool _isMovingAgent;
 		private float _health;
 
@@ -72,7 +76,7 @@ namespace Gameplay.Characters
 		public virtual void MoveAgent()
 		{
 			IsMove = true;
-			_currentWaypointIndex = default;
+			CurrentWaypointIndex = default;
 			SetNextWaypoint();
 		}
 
@@ -80,30 +84,36 @@ namespace Gameplay.Characters
 		{
 		}
 
+		public void SetWaypoints(List<Transform> vector3S)
+		{
+			foreach (var vector3 in vector3S.Where(vector3 => !WorldWaypoints.Contains(vector3.position)))
+				WorldWaypoints.Add(vector3.position);
+		}
+
+		protected virtual void EndPath() => OnEndPath?.Invoke();
+
+		protected virtual void SetNextWaypoint()
+		{
+			if (CurrentWaypointIndex >= WorldWaypoints.Count)
+				return;
+
+			var vector3 = WorldWaypoints[CurrentWaypointIndex];
+			_agent.SetDestination(vector3);
+			CurrentWaypointIndex++;
+		}
+
 		private void Update()
 		{
 			if (!IsMove)
 				return;
 
-			if (_agent.remainingDistance < 0.01f && _currentWaypointIndex < WorldWaypoints.Count)
+			if (_agent.remainingDistance < _remainingValue && CurrentWaypointIndex < WorldWaypoints.Count)
 				SetNextWaypoint();
 
-			if (_agent.remainingDistance < 0.01f && !_agent.pathPending)
+			if (_agent.remainingDistance < _remainingValue && !_agent.pathPending)
 			{
 				EndPath();
 			}
-		}
-
-		protected virtual void EndPath() => OnEndPath?.Invoke();
-
-		private void SetNextWaypoint()
-		{
-			if (_currentWaypointIndex >= WorldWaypoints.Count)
-				return;
-
-			var vector3 = WorldWaypoints[_currentWaypointIndex];
-			_agent.SetDestination(vector3);
-			_currentWaypointIndex++;
 		}
 	}
 }

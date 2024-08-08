@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4019446443929412433, guid: e418e1d52271137499c4dd60dda22c55, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4714859045480734052, guid: e418e1d52271137499c4dd60dda22c55, type: 3}
       propertyPath: m_Name
       value: Plant
