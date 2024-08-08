@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using _Game.BarCatalog;
 using _Game.BarInventory;
 using _Game.DrunkManSpawner;
-using _Game.DrunkManSpawner.Data;
 using _Game.Mixer;
 using Cinemachine;
 using Gameplay.Characters;
@@ -15,14 +13,13 @@ namespace GameManager.LevelsLogic
 	{
 		public event Action OnWinLevel;
 		public event Action OnLoseLevel;
-
-		[SerializeField] private List<DrunkManData> _drunkManData;
+		
 		[SerializeField] private CinemachineVirtualCamera _followCamera;
-		[SerializeField] private DrunkManHandler _drunkManHandler;
+		[SerializeField] private SpawnCharacterHandler _spawnCharacterHandler;
 		[SerializeField] private WinCircleHandler _winCircleHandler;
 
 		private BaseMixerUI _currentMixer;
-		private DrunkManFactory _drunkFactory;
+		private CharacterFactory _characterFactory;
 		private Inventory _currentInventory;
 		private CharacterBase _currentDrunkMan;
 		public CinemachineVirtualCamera FollowCamera1 => _followCamera;
@@ -49,7 +46,7 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnShowVisualPath += ShowShowVisualDrawPath;
 			_currentInventory.SlotDraggedView.OnHideVisualPath += HideVisualDrawPath;
 
-			_drunkManHandler.OnSpawnDrunkMan += SpawnDrunkMan;
+			_spawnCharacterHandler.OnSpawnDrunkMan += SpawnSpawnCharacter;
 
 			_winCircleHandler.OnWinLevel += Win;
 		}
@@ -63,7 +60,7 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnShowVisualPath -= ShowShowVisualDrawPath;
 			_currentInventory.SlotDraggedView.OnHideVisualPath -= HideVisualDrawPath;
 
-			_drunkManHandler.OnSpawnDrunkMan -= SpawnDrunkMan;
+			_spawnCharacterHandler.OnSpawnDrunkMan -= SpawnSpawnCharacter;
 
 			_winCircleHandler.OnWinLevel -= Win;
 		}
@@ -75,7 +72,7 @@ namespace GameManager.LevelsLogic
 		{
 			_currentInventory.Init();
 			_currentInventory.ShowInventory(true);
-			_drunkManHandler.StartSpawn(_drunkManData);
+			_spawnCharacterHandler.SpawnPlayer();
 			_winCircleHandler.StartRandomCircle();
 		}
 
@@ -89,7 +86,7 @@ namespace GameManager.LevelsLogic
 
 		private void StarMove() => _currentDrunkMan.PlayAgent();
 
-		private void SpawnDrunkMan(CharacterBase characterBase)
+		private void SpawnSpawnCharacter(CharacterBase characterBase)
 		{
 			if (_currentDrunkMan != default)
 			{

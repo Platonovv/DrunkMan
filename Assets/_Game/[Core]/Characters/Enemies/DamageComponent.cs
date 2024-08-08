@@ -2,7 +2,7 @@
 
 namespace Gameplay.Characters.Enemies
 {
-	public class BaseEnemy : MonoBehaviour
+	public class DamageComponent : MonoBehaviour
 	{
 		[SerializeField] private float _damage = 20f;
 		

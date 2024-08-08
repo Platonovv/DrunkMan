@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace _Game.DrunkManSpawner.Data
 {
-	[CreateAssetMenu(fileName = "DrunkMan", menuName = "Level/DrunkMan")]
-	public class DrunkManData : ScriptableObject
+	[CreateAssetMenu(fileName = "CharacterData", menuName = "Level/CharacterData")]
+	public class CharacterData : ScriptableObject
 	{
 		[SerializeField] private int _health = 100;
 		[SerializeField] private float _speed = 1f;
@@ -20,8 +20,7 @@ namespace _Game.DrunkManSpawner.Data
 	public enum DrunkManType
 	{
 		Noting = 0,
-		Slow = 1,
-		Normal = 2,
-		Fast = 3,
+		Player = 1,
+		Enemy = 2,
 	}
 }

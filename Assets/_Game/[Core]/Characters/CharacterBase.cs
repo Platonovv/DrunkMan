@@ -21,7 +21,7 @@ namespace Gameplay.Characters
 		[SerializeField] private LineRenderer _lineRenderer;
 		[SerializeField] protected NavMeshAgent _agent;
 
-		private DrunkManData _drunkManData;
+		private CharacterData _characterData;
 		private int _currentWaypointIndex;
 
 		private readonly List<Vector3> _worldWaypoints = new();
@@ -32,14 +32,14 @@ namespace Gameplay.Characters
 		private float _health;
 		private int _currentPathIndex;
 
-		public void InitData(DrunkManData drunkManData)
+		public void InitData(CharacterData characterData)
 		{
-			_drunkManData = drunkManData;
-			_health = drunkManData.Health;
+			_characterData = characterData;
+			_health = characterData.Health;
 
 			_healthBar.SetMaxValue(_health, true);
 			_healthBar.SetValue(_health);
-			_agent.speed = drunkManData.Speed;
+			_agent.speed = characterData.Speed;
 		}
 
 		public void SetPosition(Transform pos)
@@ -51,11 +51,11 @@ namespace Gameplay.Characters
 
 		public void TakeDamage(float value)
 		{
-			_health = Mathf.Clamp(_health - value, 0, _drunkManData.Health);
+			_health = Mathf.Clamp(_health - value, 0, _characterData.Health);
 			_healthBar.SetValue(_health);
 			ResetPath();
 
-			if (_health <= 0 && _health < _drunkManData.Health)
+			if (_health <= 0 && _health < _characterData.Health)
 				OnDeath?.Invoke();
 		}
 

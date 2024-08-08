@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 4019446443929412433}
   - component: {fileID: 20432930111027781}
   m_Layer: 0
-  m_Name: DrunkMan
+  m_Name: BaseDrunkMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

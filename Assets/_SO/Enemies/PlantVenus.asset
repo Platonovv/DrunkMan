@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c43ec1516d4bd09cd6a7a8bcdb0bd4, type: 3}
+  m_Name: PlantVenus
+  m_EditorClassIdentifier: 
+  _health: 100
+  _speed: 3.5
+  _drunkManType: 2
+  _characterPrefab: {fileID: 8209494050637509485, guid: 80579ed314261c542aac6cb150a610ba, type: 3}
