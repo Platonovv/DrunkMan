@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace _Tools
 {
@@ -11,6 +15,16 @@ namespace _Tools
 		private Vector3 _dragOrigin;
 		private Vector3 _dragVelocity;
 		private Vector3 _lastMousePosition;
+		private PointerEventData _pointerEventData;
+		private readonly List<RaycastResult> _results = new();
+		private GraphicRaycaster _graphicRaycaster;
+		private EventSystem _eventSystem;
+
+		private void Start()
+		{
+			_eventSystem = EventSystem.current;
+			_graphicRaycaster = FindObjectOfType<MainCanvasHandler>().GraphicRaycaster;
+		}
 
 		private void Update()
 		{
@@ -21,6 +35,9 @@ namespace _Tools
 			}
 
 			if (!Input.GetMouseButton(0))
+				return;
+
+			if (IsPointerOverUIElement())
 				return;
 
 			Vector3 currentMousePosition = Input.mousePosition;
@@ -35,6 +52,16 @@ namespace _Tools
 			newPosition.z = Mathf.Clamp(newPosition.z, _minBounds.z, _maxBounds.z);
 
 			transform.position = newPosition;
+		}
+
+		private bool IsPointerOverUIElement()
+		{
+			_pointerEventData = new PointerEventData(_eventSystem) {position = Input.mousePosition};
+
+			_results.Clear();
+			_graphicRaycaster.Raycast(_pointerEventData, _results);
+
+			return _results.Any(result => !result.gameObject.TryGetComponent(out RawImage _));
 		}
 	}
 }

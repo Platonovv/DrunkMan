@@ -1,4 +1,5 @@
-﻿using _Game.BarInventory;
+﻿using System;
+using _Game.BarInventory;
 using UnityEngine.EventSystems;
 
 namespace UI.MainMenu.GangPage.Dragged
@@ -13,7 +14,7 @@ namespace UI.MainMenu.GangPage.Dragged
 		public override void OnBeginDrag(PointerEventData eventData)
 		{
 			base.OnBeginDrag(eventData);
-
+			
 			if (DragCardIntermediary.DraggedState != DraggedState.CanTouch)
 				return;
 
