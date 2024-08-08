@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c43ec1516d4bd09cd6a7a8bcdb0bd4, type: 3}
   m_Name: DrunkMan
   m_EditorClassIdentifier: 
+  _health: 100
+  _speed: 1
   _drunkManType: 1
-  _characterPrefab: {fileID: 4942461281292096018, guid: 6f22fd4fd53422c4e8301f396e44765d, type: 3}
+  _characterPrefab: {fileID: 4117736135743402919, guid: 6f22fd4fd53422c4e8301f396e44765d, type: 3}

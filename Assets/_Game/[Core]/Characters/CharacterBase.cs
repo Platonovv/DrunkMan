@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using _Game.DrunkManSpawner.Data;
 using UI.ProgressBars;
 using UnityEngine;
@@ -17,20 +16,17 @@ namespace Gameplay.Characters
 		[Header("Components")]
 		[SerializeField] private ProgressBar _healthBar;
 		[SerializeField] private Rigidbody _rigidbody;
-		[SerializeField] private CharacterAnimator _animator;
-		[SerializeField] private LineRenderer _lineRenderer;
+		[SerializeField] protected CharacterAnimator _animator;
 		[SerializeField] protected NavMeshAgent _agent;
 
 		private CharacterData _characterData;
 		private int _currentWaypointIndex;
-
-		private readonly List<Vector3> _worldWaypoints = new();
-		private readonly Dictionary<int, List<Vector3>> _dictionaryPathCount = new();
-
-		private bool _isMove;
 		private bool _isMovingAgent;
 		private float _health;
-		private int _currentPathIndex;
+
+		protected bool IsMove;
+		protected int CurrentPathIndex;
+		protected readonly List<Vector3> WorldWaypoints = new();
 
 		public void InitData(CharacterData characterData)
 		{
@@ -61,110 +57,51 @@ namespace Gameplay.Characters
 
 		public void SetParent(Transform parent) => transform.SetParent(parent);
 
-		public void PlayAgent()
+		public virtual void PlayAgent()
 		{
-			_agent.isStopped = false;
-			_animator.DoMove(true);
 		}
 
-		public void SetLineRenderer(List<Vector3> vector3S)
+		public virtual void SetLineRenderer(List<Vector3> vector3S)
 		{
-			SavePath(vector3S);
 		}
 
-		public void MoveAgent()
+		public virtual void ClearLastPath(List<Vector3> vector3S)
 		{
-			_isMove = true;
+		}
+
+		public virtual void MoveAgent()
+		{
+			IsMove = true;
 			_currentWaypointIndex = default;
 			SetNextWaypoint();
-			_agent.isStopped = true;
-			_animator.DoDrink(true);
-			_currentPathIndex++;
 		}
 
-		public void ResetPath()
+		protected virtual void ResetPath()
 		{
-			_worldWaypoints.Clear();
-			_dictionaryPathCount.Clear();
-			_currentPathIndex = default;
-			_lineRenderer.positionCount = default;
-			if (_agent.isOnNavMesh)
-				_agent.ResetPath();
-		}
-
-		public void ClearLastPath(List<Vector3> vector3S)
-		{
-			_lineRenderer.positionCount -= _dictionaryPathCount[_currentPathIndex].Count;
-
-			foreach (var vector3 in _dictionaryPathCount[_currentPathIndex].ToList())
-			{
-				foreach (var worldWaypoint in _worldWaypoints.ToList().Where(worldWaypoint => worldWaypoint == vector3))
-					_worldWaypoints.Remove(worldWaypoint);
-			}
-
-			_dictionaryPathCount.Remove(_currentPathIndex);
-		}
-
-		private void SavePath(List<Vector3> vector3S)
-		{
-			Vector3 worldWaypointCalculate;
-			List<Vector3> currentVector3 = new List<Vector3>();
-
-			switch (_worldWaypoints.Count)
-			{
-				case <= 0:
-					worldWaypointCalculate = transform.position;
-					_worldWaypoints.Add(worldWaypointCalculate);
-					currentVector3.Add(worldWaypointCalculate);
-					break;
-				default:
-					worldWaypointCalculate = _worldWaypoints.LastOrDefault();
-					break;
-			}
-
-			foreach (var vector3 in vector3S)
-			{
-				worldWaypointCalculate += vector3;
-				_worldWaypoints.Add(worldWaypointCalculate);
-				currentVector3.Add(worldWaypointCalculate);
-			}
-
-			_lineRenderer.positionCount = _worldWaypoints.Count;
-			_lineRenderer.SetPositions(_worldWaypoints.ToArray());
-			_dictionaryPathCount.TryAdd(_currentPathIndex, currentVector3);
-		}
-
-		private void Awake()
-		{
-			_lineRenderer.startColor = Color.red;
-			_lineRenderer.endColor = Color.red;
-			_lineRenderer.startWidth = 0.1f;
-			_lineRenderer.endWidth = 0.1f;
 		}
 
 		private void Update()
 		{
-			if (!_isMove)
+			if (!IsMove)
 				return;
 
-			if (_agent.remainingDistance < 0.01f && _currentWaypointIndex < _worldWaypoints.Count)
+			if (_agent.remainingDistance < 0.01f && _currentWaypointIndex < WorldWaypoints.Count)
 				SetNextWaypoint();
 
 			if (_agent.remainingDistance < 0.01f && !_agent.pathPending)
 			{
-				_isMove = false;
-				ResetPath();
-				OnEndPath?.Invoke();
-				_animator.DoMove(false);
+				EndPath();
 			}
 		}
 
+		protected virtual void EndPath() => OnEndPath?.Invoke();
+
 		private void SetNextWaypoint()
 		{
-			if (_currentWaypointIndex >= _worldWaypoints.Count)
+			if (_currentWaypointIndex >= WorldWaypoints.Count)
 				return;
 
-			var vector3 = _worldWaypoints[_currentWaypointIndex];
+			var vector3 = WorldWaypoints[_currentWaypointIndex];
 			_agent.SetDestination(vector3);
 			_currentWaypointIndex++;
 		}

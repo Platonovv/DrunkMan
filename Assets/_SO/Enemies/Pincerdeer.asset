@@ -15,4 +15,4 @@ MonoBehaviour:
   _health: 100
   _speed: 3.5
   _drunkManType: 2
-  _characterPrefab: {fileID: 8209494050637509485, guid: 9da86045d04653f41833cfc3adf3da46, type: 3}
+  _characterPrefab: {fileID: 4351244234149188916, guid: 9da86045d04653f41833cfc3adf3da46, type: 3}

@@ -295,7 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7045613535658116898}
-  - component: {fileID: 4942461281292096018}
+  - component: {fileID: 4117736135743402919}
   - component: {fileID: 7586414698185593254}
   - component: {fileID: 4019446443929412433}
   - component: {fileID: 20432930111027781}
@@ -324,7 +324,7 @@ Transform:
   - {fileID: 980366994466999660}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4942461281292096018
+--- !u!114 &4117736135743402919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -333,14 +333,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4714859045480734052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 670589afb359416b94c5e968654a7a38, type: 3}
+  m_Script: {fileID: 11500000, guid: de265f92ac7f42cb81e809f0c57dc239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 5324853138346868897}
   _rigidbody: {fileID: 20432930111027781}
   _animator: {fileID: 3595901256643083786}
-  _lineRenderer: {fileID: 8488121176895648562}
   _agent: {fileID: 7586414698185593254}
+  _lineRenderer: {fileID: 8488121176895648562}
 --- !u!195 &7586414698185593254
 NavMeshAgent:
   m_ObjectHideFlags: 0
