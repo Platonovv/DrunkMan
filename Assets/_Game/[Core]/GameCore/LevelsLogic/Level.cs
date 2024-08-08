@@ -3,6 +3,7 @@ using _Game.BarCatalog;
 using _Game.BarInventory;
 using _Game.DrunkManSpawner;
 using _Game.Mixer;
+using _Tools;
 using Cinemachine;
 using Gameplay.Characters;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace GameManager.LevelsLogic
 		public event Action OnLoseLevel;
 		
 		[SerializeField] private CinemachineVirtualCamera _followCamera;
+		[SerializeField] private MiniMapCameraHelper _miniMapCameraHelper;
 		[SerializeField] private SpawnCharacterHandler _spawnCharacterHandler;
 		[SerializeField] private WinCircleHandler _winCircleHandler;
 
@@ -98,6 +100,12 @@ namespace GameManager.LevelsLogic
 			_currentDrunkMan.OnEndPath += EndMix;
 			_currentDrunkMan.OnDeath += Lose;
 			FollowCamera(characterBase.transform);
+			FollowMiniMap(characterBase.transform);
+		}
+
+		private void FollowMiniMap(Transform characterBaseTransform)
+		{
+			_miniMapCameraHelper.SetFollow(characterBaseTransform);
 		}
 
 		private void StartMixer()
