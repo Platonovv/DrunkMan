@@ -636,9 +636,14 @@ ModelImporter:
   - first:
       41386430: 2186277476908879412
     second: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - Default
+    second: {fileID: 2100000, guid: 0c8d6cd6c64331646a8af0067a1ca2e6, type: 2}
   materials:
-    materialImportMode: 0
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
