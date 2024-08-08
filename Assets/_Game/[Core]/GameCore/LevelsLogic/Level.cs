@@ -6,6 +6,7 @@ using _Game.Mixer;
 using _Game.UI.Quests;
 using _Tools;
 using Cinemachine;
+using GameManager.LevelsLogic.Data;
 using Gameplay.Characters;
 using UnityEngine;
 
@@ -54,7 +55,7 @@ namespace GameManager.LevelsLogic
 			_spawnCharacterHandler.OnSpawnDrunkMan += SpawnSpawnCharacter;
 
 			_winCircleHandler.OnWinLevel += Win;
-			_winCircleHandler.OnSpawnWinCircle += SetQuestSprite;
+			_winCircleHandler.OnSpawnWinCircle += SetQuest;
 		}
 
 		private void UnSubscribe()
@@ -69,7 +70,7 @@ namespace GameManager.LevelsLogic
 			_spawnCharacterHandler.OnSpawnDrunkMan -= SpawnSpawnCharacter;
 
 			_winCircleHandler.OnWinLevel -= Win;
-			_winCircleHandler.OnSpawnWinCircle -= SetQuestSprite;
+			_winCircleHandler.OnSpawnWinCircle -= SetQuest;
 		}
 
 		private void Win() => OnWinLevel?.Invoke();
@@ -94,7 +95,10 @@ namespace GameManager.LevelsLogic
 
 		private void StarMove() => _currentDrunkMan.PlayAgent();
 
-		private void SetQuestSprite(Sprite sprite) => _mainGUIQuestView.SetQuestImage(sprite);
+		private void SetQuest(Sprite sprite, QuestData questData)
+		{
+			_mainGUIQuestView.SetQuest(sprite, questData);
+		}
 
 		private void SpawnSpawnCharacter(CharacterBase characterBase)
 		{

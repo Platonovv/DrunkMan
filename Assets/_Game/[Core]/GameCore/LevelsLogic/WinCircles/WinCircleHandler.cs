@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Tools;
+using GameManager.LevelsLogic.Data;
 using UnityEngine;
 
 namespace GameManager.LevelsLogic
@@ -8,7 +9,7 @@ namespace GameManager.LevelsLogic
 	public class WinCircleHandler : MonoBehaviour
 	{
 		public event Action OnWinLevel;
-		public event Action<Sprite> OnSpawnWinCircle;
+		public event Action<Sprite, QuestData> OnSpawnWinCircle;
 
 		[SerializeField] private List<WinCircle> _winCircles;
 
@@ -18,8 +19,8 @@ namespace GameManager.LevelsLogic
 
 			var randomCircle = _winCircles.GetRandomElement();
 			randomCircle.Activate();
-			if (randomCircle.SpriteCircle != default)
-				OnSpawnWinCircle?.Invoke(randomCircle.SpriteCircle);
+
+			OnSpawnWinCircle?.Invoke(randomCircle.SpriteCircle, randomCircle.QuestData);
 		}
 
 		private void Awake()

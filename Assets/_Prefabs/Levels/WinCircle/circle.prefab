@@ -69,6 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60b70ddb28745dfa1b1851971511140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _questData: {fileID: 11400000, guid: c0d099094395c3544b4b8ad0a27c3146, type: 2}
+  _spriteCircle: {fileID: 0}
 --- !u!1001 &5920796730697632722
 PrefabInstance:
   m_ObjectHideFlags: 0
