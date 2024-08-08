@@ -33,15 +33,15 @@ namespace _Game.BarInventory
 			SortInventory(DirectionType.Up);
 		}
 
-		public void ResetSelectedSlots()
-		{
-			_ingredientsCatalog.ResetSelected();
-		}
+		public void ResetSelectedSlots() => _ingredientsCatalog.ResetAll();
 
 		public void ShowInventory(bool active)
 		{
 			if (active)
+			{
 				_canvasGroup.Show(_showDuration);
+			}
+				
 			else
 				_canvasGroup.Hide();
 		}

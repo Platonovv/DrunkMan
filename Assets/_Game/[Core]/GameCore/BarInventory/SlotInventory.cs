@@ -29,6 +29,12 @@ namespace _Game.BarInventory
 		public void InitDragView(IngredientDraggedView ingredientDraggedView)
 		{
 			_ingredientDraggedView = ingredientDraggedView;
+			Subscribe();
+		}
+
+		private void Subscribe()
+		{
+			Unsubscribe();
 			_ingredientDraggedView.OnStartDrag += CheckState;
 			_ingredientDraggedView.OnSelectedItem += SelectedItem;
 			_ingredientDraggedView.OnReturnItem += ReturnItem;
@@ -82,15 +88,20 @@ namespace _Game.BarInventory
 
 		private void OnDestroy()
 		{
-			if (_ingredientDraggedView != default)
-			{
-				_ingredientDraggedView.OnStartDrag -= CheckState;
-				_ingredientDraggedView.OnSelectedItem -= SelectedItem;
-				_ingredientDraggedView.OnReturnItem -= ReturnItem;
-				_ingredientDraggedView.OnEndDrag -= CheckState;
-			}
+			Unsubscribe();
 
 			ResourceHandler.OnValueAdded -= ValueChanged;
+		}
+
+		private void Unsubscribe()
+		{
+			if (_ingredientDraggedView == default)
+				return;
+
+			_ingredientDraggedView.OnStartDrag -= CheckState;
+			_ingredientDraggedView.OnSelectedItem -= SelectedItem;
+			_ingredientDraggedView.OnReturnItem -= ReturnItem;
+			_ingredientDraggedView.OnEndDrag -= CheckState;
 		}
 
 		private void ShowSlot(bool activate)

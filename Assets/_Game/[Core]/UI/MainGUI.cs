@@ -22,6 +22,8 @@ namespace _Game.UI
 
 		public void ShowLose() => _loseScreen.Show();
 
+		public void HideInventory() => _inventory.ShowInventory(false);
+
 		public void HideScreens()
 		{
 			_winScreen.Hide();

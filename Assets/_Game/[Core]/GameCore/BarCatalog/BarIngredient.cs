@@ -13,7 +13,7 @@ namespace _Game.BarCatalog
 		[SerializeField] private ResourceType _resourceType;
 		[SerializeField] private int _price;
 		[SerializeField] private int _count;
-		
+
 		[Header("WayPoints")]
 		[SerializeField] private List<Vector3> _wayPoints;
 
@@ -31,6 +31,11 @@ namespace _Game.BarCatalog
 		public void SetCurrentCount(int count) => CurrentCount = count;
 		public void AddedCount(int value) => CurrentCount += value;
 		private void OnEnable() => SetCurrentCount(_count);
-		
+
+		public void Reset()
+		{
+			CurrentCount = _count;
+			SetSelected(false);
+		}
 	}
 }

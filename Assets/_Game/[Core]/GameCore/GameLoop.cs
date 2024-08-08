@@ -61,11 +61,13 @@ namespace _Game
 
 		private void Win()
 		{
+			_mainGUI.HideInventory();
 			_mainGUI.ShowWin();
 		}
 
 		private void Lose()
 		{
+			_mainGUI.HideInventory();
 			_mainGUI.ShowLose();
 		}
 
