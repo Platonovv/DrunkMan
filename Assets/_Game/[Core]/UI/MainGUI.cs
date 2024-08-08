@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.BarInventory;
 using _Game.Mixer;
+using _Game.UI.Quests;
 using _Game.UI.Screens;
 using UnityEngine;
 
@@ -14,10 +15,12 @@ namespace _Game.UI
 		[SerializeField] private BaseMixerUI _baseMixerUI;
 		[SerializeField] private WinScreen _winScreen;
 		[SerializeField] private LoseScreen _loseScreen;
+		[SerializeField] private QuestView _questView;
 
 		public BaseMixerUI BaseMixerUI => _baseMixerUI;
 		public Inventory Inventory => _inventory;
-
+		public QuestView QuestView => _questView;
+		
 		public void ShowWin() => _winScreen.Show();
 
 		public void ShowLose() => _loseScreen.Show();

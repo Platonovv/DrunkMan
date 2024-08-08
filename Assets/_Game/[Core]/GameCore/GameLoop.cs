@@ -39,7 +39,7 @@ namespace _Game
 			_levelPresenter.OnLevelLoaded -= InitLevelSystems;
 			_currentLevel = Object.FindObjectOfType<Level>();
 
-			_currentLevel.Init(_currentMixer, _currentInventory);
+			_currentLevel.Init(_currentMixer, _currentInventory, _mainGUI.QuestView);
 			Subscribe();
 		}
 

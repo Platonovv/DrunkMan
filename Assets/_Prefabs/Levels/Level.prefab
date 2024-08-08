@@ -677,10 +677,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464e35f051b946da981f7fa5780d92dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 3988351280406327233}
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
   _dragSpeed: 0.02
   _minBounds: {x: -70, y: 0, z: -45}
   _maxBounds: {x: 15, y: 0, z: 30}
@@ -5658,6 +5654,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8747946892833566449}
     m_Modifications:
+    - target: {fileID: 237182758234060347, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: _spriteCircle
+      value: 
+      objectReference: {fileID: 21300000, guid: f4fb49cde8cccb14c83cd918ae09c572, type: 3}
     - target: {fileID: 1177175455422094787, guid: 571439e091deff344a5117763c961ddc, type: 3}
       propertyPath: m_Name
       value: WinCircle
@@ -5694,6 +5694,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -29.87
       objectReference: {fileID: 0}
+    - target: {fileID: 4734735936508027510, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: _spriteCircle
+      value: 
+      objectReference: {fileID: 21300000, guid: fac2580f45a611247ad91e7fa543e0e0, type: 3}
+    - target: {fileID: 5059364155099994691, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: _spriteCircle
+      value: 
+      objectReference: {fileID: 21300000, guid: 5e5fb0ae548eeb54d9fdaadad06ea040, type: 3}
     - target: {fileID: 5897200610661961021, guid: 571439e091deff344a5117763c961ddc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.89
@@ -5742,6 +5750,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8283285177532603437, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: _spriteCircle
+      value: 
+      objectReference: {fileID: 21300000, guid: 6dd890a78713a9845be4c0d205c84523, type: 3}
+    - target: {fileID: 8449961284865754364, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: _spriteCircle
+      value: 
+      objectReference: {fileID: 21300000, guid: 10de06d92cd63c745b6c4f36cb5b9363, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -3,6 +3,7 @@ using _Game.BarCatalog;
 using _Game.BarInventory;
 using _Game.DrunkManSpawner;
 using _Game.Mixer;
+using _Game.UI.Quests;
 using _Tools;
 using Cinemachine;
 using Gameplay.Characters;
@@ -14,7 +15,7 @@ namespace GameManager.LevelsLogic
 	{
 		public event Action OnWinLevel;
 		public event Action OnLoseLevel;
-		
+
 		[SerializeField] private CinemachineVirtualCamera _followCamera;
 		[SerializeField] private MiniMapCameraHelper _miniMapCameraHelper;
 		[SerializeField] private SpawnCharacterHandler _spawnCharacterHandler;
@@ -24,12 +25,14 @@ namespace GameManager.LevelsLogic
 		private CharacterFactory _characterFactory;
 		private Inventory _currentInventory;
 		private CharacterBase _currentDrunkMan;
+		private QuestView _mainGUIQuestView;
 		public CinemachineVirtualCamera FollowCamera1 => _followCamera;
 
-		public void Init(BaseMixerUI currentMixer, Inventory currentInventory)
+		public void Init(BaseMixerUI currentMixer, Inventory currentInventory, QuestView mainGUIQuestView)
 		{
 			_currentMixer = currentMixer;
 			_currentInventory = currentInventory;
+			_mainGUIQuestView = mainGUIQuestView;
 
 			Subscribe();
 		}
@@ -51,6 +54,7 @@ namespace GameManager.LevelsLogic
 			_spawnCharacterHandler.OnSpawnDrunkMan += SpawnSpawnCharacter;
 
 			_winCircleHandler.OnWinLevel += Win;
+			_winCircleHandler.OnSpawnWinCircle += SetQuestSprite;
 		}
 
 		private void UnSubscribe()
@@ -65,9 +69,11 @@ namespace GameManager.LevelsLogic
 			_spawnCharacterHandler.OnSpawnDrunkMan -= SpawnSpawnCharacter;
 
 			_winCircleHandler.OnWinLevel -= Win;
+			_winCircleHandler.OnSpawnWinCircle -= SetQuestSprite;
 		}
 
 		private void Win() => OnWinLevel?.Invoke();
+
 		private void Lose() => OnLoseLevel?.Invoke();
 
 		private void StarLevel()
@@ -87,6 +93,8 @@ namespace GameManager.LevelsLogic
 			=> _currentDrunkMan.ClearLastPath(barIngredient.WayPoints);
 
 		private void StarMove() => _currentDrunkMan.PlayAgent();
+
+		private void SetQuestSprite(Sprite sprite) => _mainGUIQuestView.SetQuestImage(sprite);
 
 		private void SpawnSpawnCharacter(CharacterBase characterBase)
 		{

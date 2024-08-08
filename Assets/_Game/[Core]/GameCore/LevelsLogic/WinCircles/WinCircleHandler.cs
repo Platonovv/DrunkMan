@@ -8,6 +8,7 @@ namespace GameManager.LevelsLogic
 	public class WinCircleHandler : MonoBehaviour
 	{
 		public event Action OnWinLevel;
+		public event Action<Sprite> OnSpawnWinCircle;
 
 		[SerializeField] private List<WinCircle> _winCircles;
 
@@ -17,6 +18,8 @@ namespace GameManager.LevelsLogic
 
 			var randomCircle = _winCircles.GetRandomElement();
 			randomCircle.Activate();
+			if (randomCircle.SpriteCircle != default)
+				OnSpawnWinCircle?.Invoke(randomCircle.SpriteCircle);
 		}
 
 		private void Awake()
