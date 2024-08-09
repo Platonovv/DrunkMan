@@ -1104,10 +1104,10 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 2986234234325396513}
   _enemiesData:
-  - {fileID: 11400000, guid: 3a0bf1247800a6b418bf6e8c7e70ddd8, type: 2}
-  - {fileID: 11400000, guid: 773d90b5ae6883a488ce865d1fdfdf9b, type: 2}
-  - {fileID: 11400000, guid: a2e268183a987e84aa6dd91280a2ff59, type: 2}
-  - {fileID: 11400000, guid: 5097b5b52e046214087be75ae40adcb4, type: 2}
+  - {fileID: 11400000, guid: 318f1c9867851794b8053d4e738bb792, type: 2}
+  - {fileID: 11400000, guid: a257c157377ccdd429c6b7e1463af085, type: 2}
+  - {fileID: 11400000, guid: fa8f89125954eb44a97176d9fbf9426c, type: 2}
+  - {fileID: 11400000, guid: 786794345d749b449bc194f85b2c9c97, type: 2}
   _spawnEnemiesPoints:
   - {fileID: 1961479227663623093}
   - {fileID: 4823062335532306497}
@@ -21535,6 +21535,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -29.87
       objectReference: {fileID: 0}
+    - target: {fileID: 3039961019260728801, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3086561049144787426, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3410935457818505734, guid: 571439e091deff344a5117763c961ddc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -31.67
@@ -21623,6 +21631,10 @@ PrefabInstance:
       propertyPath: _spriteCircle
       value: 
       objectReference: {fileID: 21300000, guid: 6dd890a78713a9845be4c0d205c84523, type: 3}
+    - target: {fileID: 8351248891180664913, guid: 571439e091deff344a5117763c961ddc, type: 3}
+      propertyPath: _questTargets.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8449961284865754364, guid: 571439e091deff344a5117763c961ddc, type: 3}
       propertyPath: _questData
       value: 

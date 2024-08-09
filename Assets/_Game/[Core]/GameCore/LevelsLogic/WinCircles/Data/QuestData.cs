@@ -6,9 +6,10 @@ namespace GameManager.LevelsLogic.Data
 	public class QuestData : ScriptableObject
 	{
 		[SerializeField] private Sprite _questSprite;
+		[SerializeField] private EnemyType _enemyType;
 		[SerializeField] private int _questReward = 100;
-
 		public Sprite QuestSprite => _questSprite;
 		public int QuestReward => _questReward;
+		public EnemyType EnemyType => _enemyType;
 	}
 }
