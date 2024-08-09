@@ -13,7 +13,6 @@ namespace _Game.BarCatalog
 		[SerializeField] private ResourceType _resourceType;
 		[SerializeField] private int _price;
 		[SerializeField] private int _count;
-		[SerializeField] private int _redemptionPrice;
 
 		[Header("WayPoints")]
 		[SerializeField] private List<Vector3> _wayPoints;
