@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
   m_Name: RIGHT 2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: c57db711bebc0324db3687db52ab2e6d, type: 3}
-  _iconDragged: {fileID: 21300000, guid: de62cdeecd91bb440b9427a767dd4f9a, type: 3}
+  _icon: {fileID: 21300000, guid: 634997c6bdac2914693c2b7abf342c6c, type: 3}
+  _iconDragged: {fileID: 21300000, guid: 17425f86dbe4ef24485b180e7e72a6d7, type: 3}
   _directionType: 3
   _resourceType: 0
   _price: 5
