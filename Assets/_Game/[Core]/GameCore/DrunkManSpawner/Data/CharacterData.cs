@@ -20,5 +20,6 @@ namespace _Game.DrunkManSpawner.Data
 		Noting = 0,
 		Player = 1,
 		Enemy = 2,
+		NPS = 3,
 	}
 }

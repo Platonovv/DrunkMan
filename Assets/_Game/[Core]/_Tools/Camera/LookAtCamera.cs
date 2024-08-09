@@ -17,7 +17,7 @@ namespace _Tools
 
 		private void LateUpdate()
 		{
-			_thisTransform.LookAt(_cameraTransform);
+			_thisTransform.rotation = _cameraTransform.rotation;
 		}
 	}
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.DrunkManSpawner.Data;
+using GameManager.LevelsLogic.Data;
 using UI.ProgressBars;
 using UnityEngine;
 using UnityEngine.AI;
@@ -51,6 +52,7 @@ namespace Gameplay.Characters
 		{
 			ResetPath();
 			transform.position = pos.position;
+			transform.rotation = pos.rotation;
 			_agent.enabled = true;
 		}
 
@@ -62,7 +64,7 @@ namespace Gameplay.Characters
 
 			if (_health <= 0 && _health < _healthBar.MaxValue)
 				OnDeath?.Invoke();
-			
+
 			OnTakeDamage?.Invoke(_healthBar.CurrentValue);
 		}
 
@@ -73,6 +75,10 @@ namespace Gameplay.Characters
 		}
 
 		public virtual void SetLineRenderer(List<Vector3> vector3S)
+		{
+		}
+
+		public virtual void SetQuest(QuestData questData)
 		{
 		}
 

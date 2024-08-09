@@ -21,6 +21,7 @@ namespace _Game.DrunkManSpawner
 						break;
 					case DrunkManType.Player:
 					case DrunkManType.Enemy:
+					case DrunkManType.NPS:
 						var character = Object.Instantiate(characterData.CharacterPrefab);
 						character.InitData(drunkManData);
 						if (!characterBase.Contains(character))

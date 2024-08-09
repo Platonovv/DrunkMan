@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using _Game.BarCatalog;
 using _Game.BarInventory;
 using _Game.DrunkManSpawner;
@@ -21,13 +23,14 @@ namespace GameManager.LevelsLogic
 		[SerializeField] private CinemachineVirtualCamera _followCamera;
 		[SerializeField] private MiniMapCameraHelper _miniMapCameraHelper;
 		[SerializeField] private SpawnCharacterHandler _spawnCharacterHandler;
-		[SerializeField] private WinCircleHandler _winCircleHandler;
+		[SerializeField] private QuestCircleHandler _questCircleHandler;
 
 		private BaseMixerUI _currentMixer;
 		private CharacterFactory _characterFactory;
 		private Inventory _currentInventory;
 		private CharacterBase _currentDrunkMan;
 		private QuestView _mainGUIQuestView;
+		private List<CharacterBase> _nps;
 		public CinemachineVirtualCamera FollowCamera1 => _followCamera;
 
 		public void Init(BaseMixerUI currentMixer, Inventory currentInventory, QuestView mainGUIQuestView)
@@ -54,9 +57,11 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnHideVisualPath += HideVisualDrawPath;
 
 			_spawnCharacterHandler.OnSpawnDrunkMan += SpawnSpawnCharacter;
+			_spawnCharacterHandler.OnSpawnNPS += SpawnNps;
 
-			_winCircleHandler.OnWinLevel += Win;
-			_winCircleHandler.OnSpawnWinCircle += SetQuest;
+			_questCircleHandler.OnWinLevel += CompleteQuest;
+			_questCircleHandler.OnSpawnQuestCircle += SetQuest;
+			_questCircleHandler.OnSpawnAdditionalQuestCircle += SetAdditionalQuest;
 		}
 
 		private void UnSubscribe()
@@ -69,12 +74,14 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnHideVisualPath -= HideVisualDrawPath;
 
 			_spawnCharacterHandler.OnSpawnDrunkMan -= SpawnSpawnCharacter;
+			_spawnCharacterHandler.OnSpawnNPS -= SpawnNps;
 
-			_winCircleHandler.OnWinLevel -= Win;
-			_winCircleHandler.OnSpawnWinCircle -= SetQuest;
+			_questCircleHandler.OnWinLevel -= CompleteQuest;
+			_questCircleHandler.OnSpawnQuestCircle -= SetQuest;
+			_questCircleHandler.OnSpawnAdditionalQuestCircle -= SetAdditionalQuest;
 		}
 
-		private void Win()
+		private void CompleteQuest()
 		{
 			ResourceHandler.AddResource(ResourceType.Money, (int) _currentDrunkMan.Health);
 			OnWinLevel?.Invoke();
@@ -87,7 +94,8 @@ namespace GameManager.LevelsLogic
 			_currentInventory.Init();
 			_currentInventory.ShowInventory(true);
 			_spawnCharacterHandler.SpawnPlayer();
-			_winCircleHandler.StartRandomCircle();
+			_questCircleHandler.StartRandomQuest();
+			_questCircleHandler.StartRandomAdditionalQuest();
 		}
 
 		private void ShowShowVisualDrawPath(BarIngredient barIngredient)
@@ -100,11 +108,24 @@ namespace GameManager.LevelsLogic
 
 		private void StarMove() => _currentDrunkMan.PlayAgent();
 
-		private void SetQuest(Sprite sprite, QuestData questData)
+		private void SetQuest(QuestData questData)
 		{
-			_mainGUIQuestView.SetQuestImage(sprite);
+			_mainGUIQuestView.SetQuestImage(questData.QuestSprite);
 			UpdateQuestReward(questData.QuestReward);
 			_currentDrunkMan.InitHealForRewardQuest(questData.QuestReward);
+		}
+
+		private void SetAdditionalQuest(QuestData questData)
+		{
+			var nps = _nps.FirstOrDefault();
+
+			if (nps != default)
+				nps.SetQuest(questData);
+		}
+
+		private void SpawnNps(List<CharacterBase> nps)
+		{
+			_nps = nps;
 		}
 
 		private void UpdateQuestReward(float value) => _mainGUIQuestView.SetQuestReward(value);
