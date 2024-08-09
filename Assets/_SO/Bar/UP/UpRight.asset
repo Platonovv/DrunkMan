@@ -20,4 +20,5 @@ MonoBehaviour:
   _count: 5
   _wayPoints:
   - {x: 1, y: 0, z: 1}
-  - {x: 2, y: 0, z: 2}
+  - {x: 3, y: 0, z: -1}
+  - {x: 2, y: 0, z: 3}
