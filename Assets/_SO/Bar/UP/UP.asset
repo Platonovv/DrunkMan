@@ -17,7 +17,7 @@ MonoBehaviour:
   _directionType: 1
   _resourceType: 0
   _price: 0
-  _count: 1
+  _count: 20
   _wayPoints:
   - {x: 0, y: 0, z: 1}
   - {x: 0, y: 0, z: 2}

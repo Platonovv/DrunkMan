@@ -26,7 +26,7 @@ namespace _Game.BarCatalog
 		public int Price => _price;
 		public int CurrentCount { get; set; }
 		public ResourceType ResourceType => _resourceType;
-		public bool Selected => _selected;
+		public bool Selected => _selected && CurrentCount <= 0;
 		public void SetSelected(bool selected) => _selected = selected;
 		public void SetCurrentCount(int count) => CurrentCount = count;
 		public void AddedCount(int value) => CurrentCount += value;
