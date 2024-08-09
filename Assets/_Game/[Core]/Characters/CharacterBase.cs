@@ -39,6 +39,7 @@ namespace Gameplay.Characters
 		{
 			_characterData = characterData;
 			_agent.speed = characterData.Speed;
+			_animator.DoMove(false);
 		}
 
 		public void InitHealForRewardQuest(int questDataQuestReward)
