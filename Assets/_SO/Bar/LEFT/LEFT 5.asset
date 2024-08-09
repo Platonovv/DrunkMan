@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
-  m_Name: RIGHTLONG
+  m_Name: LEFT 5
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 9de98e0452204e24196b92fa86b7f5f8, type: 3}
-  _iconDragged: {fileID: 21300000, guid: 6b52f63ec4afa2348a84ef757343fbde, type: 3}
-  _directionType: 3
+  _icon: {fileID: 21300000, guid: 672257c7b09203e439c7e97c40266796, type: 3}
+  _iconDragged: {fileID: 21300000, guid: 836109bffd57ee24b8576cf2ba1035ab, type: 3}
+  _directionType: 4
   _resourceType: 0
   _price: 20
-  _count: 1
+  _count: 3
   _wayPoints:
-  - {x: 1, y: 0, z: -1}
-  - {x: 2, y: 0, z: -2}
-  - {x: 2, y: 0, z: 3}
-  - {x: 2, y: 0, z: 4}
-  - {x: 2, y: 0, z: 0}
+  - {x: -3, y: 0, z: 0}
+  - {x: 3, y: 0, z: -2}
+  - {x: -4, y: 0, z: -2}
+  - {x: 4, y: 0, z: -5}
