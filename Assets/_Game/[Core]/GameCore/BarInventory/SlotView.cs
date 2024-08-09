@@ -1,4 +1,5 @@
-﻿using _Game.BarCatalog;
+﻿using System;
+using _Game.BarCatalog;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +8,11 @@ namespace _Game.BarInventory
 {
 	public class SlotView : MonoBehaviour
 	{
+		public event Action OnBuyBottle;
+		
 		[Header("Components")]
 		[SerializeField] private Image _image;
+		[SerializeField] private Button _priceButton;
 		[SerializeField] private TMP_Text _price;
 		[SerializeField] private TMP_Text _count;
 		
@@ -23,6 +27,21 @@ namespace _Game.BarInventory
 		public void UpdateDraggedView(BarIngredient slotData)
 		{
 			_image.sprite = slotData.IconDragged;
+		}
+
+		private void Awake()
+		{
+			_priceButton.onClick.AddListener(ButBottle);
+		}
+
+		private void OnDestroy()
+		{
+			_priceButton.onClick.RemoveListener(ButBottle);
+		}
+
+		private void ButBottle()
+		{
+			OnBuyBottle?.Invoke();
 		}
 	}
 }
