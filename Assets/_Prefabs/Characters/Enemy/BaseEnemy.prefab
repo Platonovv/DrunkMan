@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 4019446443929412433}
   - component: {fileID: 20432930111027781}
   - component: {fileID: 7439297809141555968}
+  - component: {fileID: 5483614298569567311}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -373,6 +374,7 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _agent: {fileID: 7586414698185593254}
   _remainingValue: 0.5
+  _questComplete: {fileID: 5483614298569567311}
 --- !u!195 &7586414698185593254
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -458,6 +460,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 20
+--- !u!114 &5483614298569567311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714859045480734052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f81eca3f24c44e698b6208d2df2a131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4826398506421226712
 GameObject:
   m_ObjectHideFlags: 0

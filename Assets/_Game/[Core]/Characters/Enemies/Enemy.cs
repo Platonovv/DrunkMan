@@ -1,8 +1,28 @@
-﻿namespace Gameplay.Characters.Enemies
+﻿using _Game.DrunkManSpawner.Data;
+using GameManager.LevelsLogic.Data;
+using UnityEngine;
+
+namespace Gameplay.Characters.Enemies
 {
-	public class Enemy : CharacterBase
+	public class Enemy : CharacterBase, IQuestTarget
 	{
 		private bool _isMovingForward;
+
+		[SerializeField] private QuestComplete _questComplete;
+
+		private bool _activateQuest;
+		private EnemyData _enemyData;
+		public EnemyType EnemyType => _enemyData.EnemyType;
+		public QuestComplete QuestComplete => _questComplete;
+		public void ActivateQuest(bool activate) => _questComplete.SetActivate(activate);
+
+		public override void InitData(CharacterData characterData)
+		{
+			base.InitData(characterData);
+
+			if (characterData is EnemyData enemyData)
+				_enemyData = enemyData;
+		}
 
 		public override void MoveAgent()
 		{

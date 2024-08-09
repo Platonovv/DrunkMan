@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using _Game.DrunkManSpawner.Data;
-using _Tools;
 using Gameplay.Characters;
 using Object = UnityEngine.Object;
 
@@ -10,7 +9,6 @@ namespace _Game.DrunkManSpawner
 	{
 		public List<CharacterBase> GetCharacters(List<CharacterData> charactersData)
 		{
-			var drunkManData = charactersData.GetRandomElement();
 			var characterBase = new List<CharacterBase>();
 
 			foreach (var characterData in charactersData)
@@ -23,7 +21,7 @@ namespace _Game.DrunkManSpawner
 					case DrunkManType.Enemy:
 					case DrunkManType.NPS:
 						var character = Object.Instantiate(characterData.CharacterPrefab);
-						character.InitData(drunkManData);
+						character.InitData(characterData);
 						if (!characterBase.Contains(character))
 							characterBase.Add(character);
 						break;

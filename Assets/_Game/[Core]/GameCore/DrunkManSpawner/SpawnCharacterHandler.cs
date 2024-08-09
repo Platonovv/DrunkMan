@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.DrunkManSpawner.Data;
 using _Tools;
+using GameManager.LevelsLogic.Data;
 using Gameplay.Characters;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ namespace _Game.DrunkManSpawner
 	public class SpawnCharacterHandler : MonoBehaviour
 	{
 		public event Action<CharacterBase> OnSpawnDrunkMan;
-		public event Action<List<CharacterBase>> OnSpawnNPS;
+		public event Action<List<CharacterBase>> OnSpawnNps;
+		public event Action<List<CharacterBase>> OnSpawnEnemy;
 
 		[Header("Player")]
 		[SerializeField] private List<CharacterData> _playersData;
@@ -68,6 +70,8 @@ namespace _Game.DrunkManSpawner
 				enemy.MoveAgent();
 				randomElement.SetBusy(true);
 			}
+			
+			OnSpawnEnemy?.Invoke(enemies);
 		}
 		
 		private void SpawnAllNps()
@@ -85,10 +89,9 @@ namespace _Game.DrunkManSpawner
 				nps.SetPosition(randomElement.SpawnPos);
 				nps.SetParent(randomElement.SpawnPos);
 				randomElement.SetBusy(true);
-				
 			}
 			
-			OnSpawnNPS?.Invoke(npsList);
+			OnSpawnNps?.Invoke(npsList);
 		}
 	}
 }

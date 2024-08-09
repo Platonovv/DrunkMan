@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c43ec1516d4bd09cd6a7a8bcdb0bd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 151e08a09ae14a74a7e9256e8e05b248, type: 3}
   m_Name: Plant
   m_EditorClassIdentifier: 
-  _health: 100
   _speed: 2
   _drunkManType: 2
   _characterPrefab: {fileID: 4351244234149188916, guid: 0416c0724a4a08346a6a6f924940cc04, type: 3}
+  _enemyType: 3

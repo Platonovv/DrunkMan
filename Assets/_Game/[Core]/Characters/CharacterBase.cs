@@ -25,7 +25,7 @@ namespace Gameplay.Characters
 		[Header("Settings")]
 		[SerializeField] private float _remainingValue = 0.01f;
 
-		private CharacterData _characterData;
+		protected CharacterData _characterData;
 		protected int CurrentWaypointIndex;
 		private bool _isMovingAgent;
 		private float _health;
@@ -35,7 +35,7 @@ namespace Gameplay.Characters
 		protected readonly List<Vector3> WorldWaypoints = new();
 		public float Health => _health;
 
-		public void InitData(CharacterData characterData)
+		public virtual void InitData(CharacterData characterData)
 		{
 			_characterData = characterData;
 			_agent.speed = characterData.Speed;

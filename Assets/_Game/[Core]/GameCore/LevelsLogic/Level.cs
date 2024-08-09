@@ -10,6 +10,7 @@ using _Tools;
 using Cinemachine;
 using GameManager.LevelsLogic.Data;
 using Gameplay.Characters;
+using Gameplay.Characters.Enemies;
 using UI;
 using UnityEngine;
 
@@ -31,6 +32,8 @@ namespace GameManager.LevelsLogic
 		private CharacterBase _currentDrunkMan;
 		private QuestView _mainGUIQuestView;
 		private List<CharacterBase> _nps;
+		private List<CharacterBase> _enemies;
+		private QuestData _questAdditionalData;
 		public CinemachineVirtualCamera FollowCamera1 => _followCamera;
 
 		public void Init(BaseMixerUI currentMixer, Inventory currentInventory, QuestView mainGUIQuestView)
@@ -45,6 +48,10 @@ namespace GameManager.LevelsLogic
 		private void OnDestroy()
 		{
 			UnSubscribe();
+
+			foreach (var characterBase in _enemies)
+				if (characterBase is Enemy enemy)
+					enemy.QuestComplete.OnTargetQuestComplete -= CompleteTargetQuest;
 		}
 
 		private void Subscribe()
@@ -57,11 +64,13 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnHideVisualPath += HideVisualDrawPath;
 
 			_spawnCharacterHandler.OnSpawnDrunkMan += SpawnSpawnCharacter;
-			_spawnCharacterHandler.OnSpawnNPS += SpawnNps;
+			_spawnCharacterHandler.OnSpawnNps += SpawnNps;
+			_spawnCharacterHandler.OnSpawnEnemy += SpawnEnemy;
 
 			_questCircleHandler.OnWinLevel += CompleteQuest;
 			_questCircleHandler.OnSpawnQuestCircle += SetQuest;
 			_questCircleHandler.OnSpawnAdditionalQuestCircle += SetAdditionalQuest;
+			_questCircleHandler.OnSpawnAdditionalQuestTarget += SetAdditionalQuestTarget;
 		}
 
 		private void UnSubscribe()
@@ -74,11 +83,13 @@ namespace GameManager.LevelsLogic
 			_currentInventory.SlotDraggedView.OnHideVisualPath -= HideVisualDrawPath;
 
 			_spawnCharacterHandler.OnSpawnDrunkMan -= SpawnSpawnCharacter;
-			_spawnCharacterHandler.OnSpawnNPS -= SpawnNps;
+			_spawnCharacterHandler.OnSpawnNps -= SpawnNps;
+			_spawnCharacterHandler.OnSpawnEnemy -= SpawnEnemy;
 
 			_questCircleHandler.OnWinLevel -= CompleteQuest;
 			_questCircleHandler.OnSpawnQuestCircle -= SetQuest;
 			_questCircleHandler.OnSpawnAdditionalQuestCircle -= SetAdditionalQuest;
+			_questCircleHandler.OnSpawnAdditionalQuestTarget -= SetAdditionalQuestTarget;
 		}
 
 		private void CompleteQuest()
@@ -86,6 +97,9 @@ namespace GameManager.LevelsLogic
 			ResourceHandler.AddResource(ResourceType.Money, (int) _currentDrunkMan.Health);
 			OnWinLevel?.Invoke();
 		}
+
+		private void CompleteTargetQuest()
+			=> ResourceHandler.AddResource(ResourceType.Money, _questAdditionalData.QuestReward);
 
 		private void Lose() => OnLoseLevel?.Invoke();
 
@@ -95,7 +109,7 @@ namespace GameManager.LevelsLogic
 			_currentInventory.ShowInventory(true);
 			_spawnCharacterHandler.SpawnPlayer();
 			_questCircleHandler.StartRandomQuest();
-			_questCircleHandler.StartRandomAdditionalQuest();
+			_questCircleHandler.StartRandomAdditionalQuestTarget();
 		}
 
 		private void ShowShowVisualDrawPath(BarIngredient barIngredient)
@@ -123,9 +137,36 @@ namespace GameManager.LevelsLogic
 				nps.SetQuest(questData);
 		}
 
+		private void SetAdditionalQuestTarget(QuestData questData)
+		{
+			_questAdditionalData = questData;
+			List<IQuestTarget> questTargetList = new();
+
+			foreach (var characterBase in _enemies)
+				if (characterBase is IQuestTarget questTarget)
+					questTargetList.Add(questTarget);
+
+			questTargetList.ForEach(x => x.ActivateQuest(false));
+			var targetQuest = questTargetList.FirstOrDefault(x => x.EnemyType == questData.EnemyType);
+			targetQuest?.ActivateQuest(true);
+
+			var nps = _nps.FirstOrDefault();
+			if (nps != default)
+				nps.SetQuest(questData);
+		}
+
 		private void SpawnNps(List<CharacterBase> nps)
 		{
 			_nps = nps;
+		}
+
+		private void SpawnEnemy(List<CharacterBase> enemies)
+		{
+			_enemies = enemies;
+
+			foreach (var characterBase in _enemies)
+				if (characterBase is Enemy enemy)
+					enemy.QuestComplete.OnTargetQuestComplete += CompleteTargetQuest;
 		}
 
 		private void UpdateQuestReward(float value) => _mainGUIQuestView.SetQuestReward(value);

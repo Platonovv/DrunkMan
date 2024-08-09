@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 151e08a09ae14a74a7e9256e8e05b248, type: 3}
-  m_Name: PlantVenus
+  m_Script: {fileID: 11500000, guid: 5fd5a53c73954966bf63a5cca68a68e9, type: 3}
+  m_Name: AdditionalQuestPlantVenus
   m_EditorClassIdentifier: 
-  _speed: 2
-  _drunkManType: 2
-  _characterPrefab: {fileID: 4351244234149188916, guid: 80579ed314261c542aac6cb150a610ba, type: 3}
+  _questSprite: {fileID: 21300000, guid: 1178a39b852353c4eb7df4160dd76bdf, type: 3}
   _enemyType: 4
+  _questReward: 100

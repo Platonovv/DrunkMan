@@ -59,6 +59,11 @@ MonoBehaviour:
   _additionalQuestCircles:
   - {fileID: 6365690980461470372}
   - {fileID: 6391395822643484327}
+  _questAdditionalData:
+  - {fileID: 11400000, guid: 5c12042889ea2494d964f7ca7d557f10, type: 2}
+  - {fileID: 11400000, guid: e19ce99bf1b700a4da353e36b132e63e, type: 2}
+  - {fileID: 11400000, guid: 86f5045f6a22a7347ad66f572abbadec, type: 2}
+  - {fileID: 11400000, guid: 6c35842d39bed694ba8326de54e5f7ce, type: 2}
 --- !u!1 &4344087197626472269
 GameObject:
   m_ObjectHideFlags: 0

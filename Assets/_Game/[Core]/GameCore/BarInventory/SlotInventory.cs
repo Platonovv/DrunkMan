@@ -1,5 +1,4 @@
-﻿using System;
-using _Game.BarCatalog;
+﻿using _Game.BarCatalog;
 using _Tools;
 using UI;
 using UI.MainMenu;
@@ -112,7 +111,7 @@ namespace _Game.BarInventory
 
 			if (ResourceHandler.TrySubtractResource(ResourceType.Money, BarIngredient.Price))
 				BarIngredient.AddedCount(1);
-			
+
 			UpdateSlot();
 			CheckTouch();
 		}
@@ -143,9 +142,7 @@ namespace _Game.BarInventory
 			if (BarIngredient == default)
 				return;
 
-			if (_activateSlot
-			    && BarIngredient.IngredientAvailable
-			    && !BarIngredient.Selected)
+			if (_activateSlot && BarIngredient.IngredientAvailable && !BarIngredient.Selected)
 			{
 				_currentImage.raycastTarget = true;
 				DraggedState = DraggedState.CanTouch;

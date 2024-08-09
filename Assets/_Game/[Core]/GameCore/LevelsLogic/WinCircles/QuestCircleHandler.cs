@@ -10,10 +10,12 @@ namespace GameManager.LevelsLogic
 	{
 		public event Action OnWinLevel;
 		public event Action<QuestData> OnSpawnQuestCircle;
+		public event Action<QuestData> OnSpawnAdditionalQuestTarget;
 		public event Action<QuestData> OnSpawnAdditionalQuestCircle;
 
 		[SerializeField] private List<QuestCircle> _winCircles;
 		[SerializeField] private List<QuestCircle> _additionalQuestCircles;
+		[SerializeField] private List<QuestData> _questAdditionalData;
 
 		public void StartRandomQuest()
 		{
@@ -24,6 +26,12 @@ namespace GameManager.LevelsLogic
 			OnSpawnQuestCircle?.Invoke(randomQuestCircle.QuestData);
 		}
 
+		public void StartRandomAdditionalQuestTarget()
+		{
+			var randomAdditionalQuestCircle = _questAdditionalData.GetRandomElement();
+			OnSpawnAdditionalQuestTarget?.Invoke(randomAdditionalQuestCircle);
+		}
+		
 		public void StartRandomAdditionalQuest()
 		{
 			_additionalQuestCircles.ForEach(x => x.Deactivate());
