@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
   m_Name: Upleft
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 34094ebd678bf8b49834418e1af279e5, type: 3}
-  _iconDragged: {fileID: 21300000, guid: 588013aa7c245014e897103cd749a04b, type: 3}
+  _icon: {fileID: 21300000, guid: 40712454994da4f499f25cb8b5796c05, type: 3}
+  _iconDragged: {fileID: 21300000, guid: 5a8af179cfb5ae649aa88c7674264f4e, type: 3}
   _directionType: 1
   _resourceType: 0
   _price: 5

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
   m_Name: Downwhirpool
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: ce9afa7a97d8dbf48938f4684c16965a, type: 3}
-  _iconDragged: {fileID: 21300000, guid: b148e2c84cea37c45a9d2b04072b2c04, type: 3}
+  _icon: {fileID: 21300000, guid: 7e15b9e95246d684c9b973f46200f026, type: 3}
+  _iconDragged: {fileID: 21300000, guid: 9fad52698abf2d646b405d425f984b66, type: 3}
   _directionType: 2
   _resourceType: 0
   _price: 20
