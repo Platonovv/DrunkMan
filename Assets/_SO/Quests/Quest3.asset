@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Quest3
   m_EditorClassIdentifier: 
   _questSprite: {fileID: 21300000, guid: 10de06d92cd63c745b6c4f36cb5b9363, type: 3}
-  _questReward: 100
+  _questReward: 300

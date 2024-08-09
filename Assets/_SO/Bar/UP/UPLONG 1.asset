@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
+  m_Name: UPLONG 1
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: daf2533b9872a9346ba8205866c4d473, type: 3}
+  _iconDragged: {fileID: 21300000, guid: 41a38bf91cdf7a045bee7e9a11e273f7, type: 3}
+  _directionType: 1
+  _resourceType: 0
+  _price: 3
+  _count: 5
+  _wayPoints:
+  - {x: 0, y: 0, z: 1}
+  - {x: 1, y: 0, z: 2}
+  - {x: 2, y: 0, z: 3}
+  - {x: -1, y: 0, z: 4}
+  - {x: -2, y: 0, z: 5}
