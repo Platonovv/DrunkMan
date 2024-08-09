@@ -29,7 +29,7 @@ namespace _Game
 		public void StartLevel()
 		{
 			_levelPresenter.OnLevelLoaded += InitLevelSystems;
-			_levelPresenter.LoadLevel(default);
+			_levelPresenter.LoadLevel(0);
 		}
 
 		public void Dispose() => UnSubscribe();
@@ -40,6 +40,8 @@ namespace _Game
 			_currentLevel = Object.FindObjectOfType<Level>();
 
 			_currentLevel.Init(_currentMixer, _currentInventory, _mainGUI.QuestView);
+			
+			UnSubscribe();
 			Subscribe();
 		}
 
@@ -79,7 +81,6 @@ namespace _Game
 				_currentMixer.ContinueLevel();
 			else
 			{
-				Object.Destroy(_currentLevel);
 				_currentMixer.ResetLevel();
 				StartLevel();
 			}
