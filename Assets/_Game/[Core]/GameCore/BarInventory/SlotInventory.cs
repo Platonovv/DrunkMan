@@ -1,4 +1,5 @@
-﻿using _Game.BarCatalog;
+﻿using System;
+using _Game.BarCatalog;
 using _Tools;
 using UI;
 using UI.MainMenu;
@@ -61,9 +62,6 @@ namespace _Game.BarInventory
 
 			BarIngredient.AddedCount(1);
 
-			if (BarIngredient.Price > 0)
-				ResourceHandler.AddResource(ResourceType.Money, BarIngredient.Price);
-
 			CheckTouch();
 			UpdateSlot();
 		}
@@ -83,14 +81,14 @@ namespace _Game.BarInventory
 
 		private void Awake()
 		{
-			ResourceHandler.OnValueAdded += ValueChanged;
+			_slotView.OnBuyBottle += BuyBottle;
 		}
 
 		private void OnDestroy()
 		{
 			Unsubscribe();
 
-			ResourceHandler.OnValueAdded -= ValueChanged;
+			_slotView.OnBuyBottle -= BuyBottle;
 		}
 
 		private void Unsubscribe()
@@ -102,6 +100,21 @@ namespace _Game.BarInventory
 			_ingredientDraggedView.OnSelectedItem -= SelectedItem;
 			_ingredientDraggedView.OnReturnItem -= ReturnItem;
 			_ingredientDraggedView.OnEndDrag -= CheckState;
+		}
+
+		private void BuyBottle()
+		{
+			if (BarIngredient == default)
+
+				return;
+			if (ResourceHandler.GetResourceCount(ResourceType.Money) < BarIngredient.Price)
+				return;
+
+			if (ResourceHandler.TrySubtractResource(ResourceType.Money, BarIngredient.Price))
+				BarIngredient.AddedCount(1);
+			
+			UpdateSlot();
+			CheckTouch();
 		}
 
 		private void ShowSlot(bool activate)
@@ -125,14 +138,6 @@ namespace _Game.BarInventory
 			SetAlfa();
 		}
 
-		private void ValueChanged(ResourceType money, int value)
-		{
-			if (BarIngredient == default)
-				return;
-
-			CheckTouch();
-		}
-
 		private void CheckTouch()
 		{
 			if (BarIngredient == default)
@@ -140,7 +145,6 @@ namespace _Game.BarInventory
 
 			if (_activateSlot
 			    && BarIngredient.IngredientAvailable
-			    && ResourceHandler.GetResourceCount(ResourceType.Money) >= BarIngredient.Price
 			    && !BarIngredient.Selected)
 			{
 				_currentImage.raycastTarget = true;
@@ -163,10 +167,6 @@ namespace _Game.BarInventory
 		{
 			_currentImage.raycastTarget = false;
 			BarIngredient.AddedCount(-1);
-
-			if (BarIngredient.Price > 0)
-				ResourceHandler.TrySubtractResource(ResourceType.Money, BarIngredient.Price);
-
 			UpdateSlot();
 		}
 
