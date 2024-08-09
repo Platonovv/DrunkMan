@@ -15,9 +15,12 @@ namespace UI.MainMenu.GangPage.Dragged
 		{
 			base.OnBeginDrag(eventData);
 			
+			if (_ingredientDraggedView.CurrentSlotData != default)
+				return;
+			
 			if (DragCardIntermediary.DraggedState != DraggedState.CanTouch)
 				return;
-
+			
 			_ingredientDraggedView.SetDraggedView(DragCardIntermediary.BarIngredient);
 			_ingredientDraggedView.StartDrag(DragCardIntermediary.Transform);
 		}
