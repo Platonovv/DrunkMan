@@ -143,17 +143,13 @@ namespace GameManager.LevelsLogic
 			List<IQuestTarget> questTargetList = new();
 
 			foreach (var characterBase in _enemies)
-			{
 				if (characterBase is IQuestTarget questTarget)
-				{
 					questTargetList.Add(questTarget);
-				}
-			}
 
 			questTargetList.ForEach(x => x.ActivateQuest(false));
 			var targetQuest = questTargetList.FirstOrDefault(x => x.EnemyType == questData.EnemyType);
 			targetQuest?.ActivateQuest(true);
-			
+
 			var nps = _nps.FirstOrDefault();
 			if (nps != default)
 				nps.SetQuest(questData);
