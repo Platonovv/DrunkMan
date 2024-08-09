@@ -78,10 +78,7 @@ namespace _Game.BarInventory
 			UpdateSlot();
 		}
 
-		private void Awake()
-		{
-			_slotView.OnBuyBottle += BuyBottle;
-		}
+		private void Awake() => _slotView.OnBuyBottle += BuyBottle;
 
 		private void OnDestroy()
 		{

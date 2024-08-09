@@ -57,6 +57,7 @@ namespace UI.MainMenu.GangPage
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 			_canvasGroup.Hide();
 			OnSelectedItem?.Invoke();
+			_currentSlotData = default;
 		}
 
 		public void ReturnItem()
@@ -65,6 +66,7 @@ namespace UI.MainMenu.GangPage
 			_canvasGroup.Hide();
 			OnReturnItem?.Invoke();
 			OnHideVisualPath?.Invoke(CurrentSlotData);
+			_currentSlotData = default;
 		}
 	}
 }
