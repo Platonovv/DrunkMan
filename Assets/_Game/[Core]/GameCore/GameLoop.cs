@@ -76,14 +76,8 @@ namespace _Game
 		private void ContinueLogic(bool continueLevel)
 		{
 			_mainGUI.HideScreens();
-
-			if (continueLevel)
-				_currentMixer.ContinueLevel();
-			else
-			{
-				_currentMixer.ResetLevel();
-				StartLevel();
-			}
+			_currentMixer.ResetLevel();
+			StartLevel();
 		}
 	}
 }

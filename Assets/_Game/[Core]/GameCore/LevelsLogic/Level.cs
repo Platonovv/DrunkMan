@@ -42,6 +42,7 @@ namespace GameManager.LevelsLogic
 			_currentInventory = currentInventory;
 			_mainGUIQuestView = mainGUIQuestView;
 
+			UnSubscribe();
 			Subscribe();
 		}
 
@@ -97,12 +98,12 @@ namespace GameManager.LevelsLogic
 
 		private void CompleteQuest()
 		{
-			ResourceHandler.AddResource(ResourceType.Money, (int) _currentDrunkMan.Health);
+			ResourceHandler.AddResource(ResourceType.Money, (int) _currentDrunkMan.HealthBar.CurrentValue, true);
 			OnWinLevel?.Invoke();
 		}
 
 		private void CompleteTargetQuest()
-			=> ResourceHandler.AddResource(ResourceType.Money, _questAdditionalData.QuestReward);
+			=> ResourceHandler.AddResource(ResourceType.Money, _questAdditionalData.QuestReward, true);
 
 		private void Lose() => OnLoseLevel?.Invoke();
 

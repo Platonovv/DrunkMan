@@ -34,6 +34,7 @@ namespace Gameplay.Characters
 		protected int CurrentPathIndex;
 		protected readonly List<Vector3> WorldWaypoints = new();
 		public float Health => _health;
+		public ProgressBar HealthBar => _healthBar;
 
 		public virtual void InitData(CharacterData characterData)
 		{
