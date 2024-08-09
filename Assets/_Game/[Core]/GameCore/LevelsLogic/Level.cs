@@ -116,14 +116,28 @@ namespace GameManager.LevelsLogic
 		}
 
 		private void ShowShowVisualDrawPath(BarIngredient barIngredient)
-			=> _currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
+		{
+			if (_currentDrunkMan != default)
+				_currentDrunkMan.SetLineRenderer(barIngredient.WayPoints);
+		}
 
-		private void StartAgent() => _currentDrunkMan.MoveAgent();
+		private void StartAgent()
+		{
+			if (_currentDrunkMan != default)
+				_currentDrunkMan.MoveAgent();
+		}
 
 		private void HideVisualDrawPath(BarIngredient barIngredient)
-			=> _currentDrunkMan.ClearLastPath(barIngredient.WayPoints);
+		{
+			if (_currentDrunkMan != default)
+				_currentDrunkMan.ClearLastPath(barIngredient.WayPoints);
+		}
 
-		private void StarMove() => _currentDrunkMan.PlayAgent();
+		private void StarMove()
+		{
+			if (_currentDrunkMan != default)
+				_currentDrunkMan.PlayAgent();
+		}
 
 		private void SetQuest(QuestData questData)
 		{

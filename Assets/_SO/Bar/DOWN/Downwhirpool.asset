@@ -16,7 +16,7 @@ MonoBehaviour:
   _iconDragged: {fileID: 21300000, guid: 9fad52698abf2d646b405d425f984b66, type: 3}
   _directionType: 2
   _resourceType: 0
-  _price: 20
+  _price: 10
   _count: 3
   _wayPoints:
   - {x: 0, y: 0, z: -1}
