@@ -49,6 +49,9 @@ namespace GameManager.LevelsLogic
 		{
 			UnSubscribe();
 
+			if (_enemies == default)
+				return;
+
 			foreach (var characterBase in _enemies)
 				if (characterBase is Enemy enemy)
 					enemy.QuestComplete.OnTargetQuestComplete -= CompleteTargetQuest;

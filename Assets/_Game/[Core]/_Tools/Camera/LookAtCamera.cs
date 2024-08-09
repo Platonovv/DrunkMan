@@ -17,7 +17,8 @@ namespace _Tools
 
 		private void LateUpdate()
 		{
-			_thisTransform.rotation = _cameraTransform.rotation;
+			if (_thisTransform != default)
+				_thisTransform.rotation = _cameraTransform.rotation;
 		}
 	}
 }
