@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 669db3d864e5492a84df3fbc81f745c6, type: 3}
-  m_Name: UPLONG
+  m_Name: UPLONG 1
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: daf2533b9872a9346ba8205866c4d473, type: 3}
   _iconDragged: {fileID: 21300000, guid: 41a38bf91cdf7a045bee7e9a11e273f7, type: 3}

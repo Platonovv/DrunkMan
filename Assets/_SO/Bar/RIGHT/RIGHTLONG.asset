@@ -19,6 +19,6 @@ MonoBehaviour:
   _price: 20
   _count: 1
   _wayPoints:
-  - {x: 1, y: 0, z: 5}
-  - {x: 3, y: 0, z: 2}
-  - {x: 6, y: 0, z: 7}
+  - {x: 1, y: 0, z: 0}
+  - {x: 3, y: 0, z: 0}
+  - {x: 6, y: 0, z: 0}
