@@ -15,7 +15,7 @@ namespace _Game.UI.Quests
 		}
 		public void SetQuestReward(float value)
 		{
-			_rewardQuestText.SetText($"${value}");
+			_rewardQuestText.SetText($"{value}<sprite=\"icon_gold\", index=0>");
 		}
 	}
 }

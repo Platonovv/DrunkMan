@@ -19,6 +19,7 @@ namespace _Tools
 		private readonly List<RaycastResult> _results = new();
 		private GraphicRaycaster _graphicRaycaster;
 		private EventSystem _eventSystem;
+		private bool _dragCamera;
 
 		private void Start()
 		{
@@ -30,6 +31,13 @@ namespace _Tools
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
+				if (IsPointerOverUIElement())
+				{
+					_dragCamera = false;
+					return;
+				}
+
+				_dragCamera = true;
 				_lastMousePosition = Input.mousePosition;
 				return;
 			}
@@ -37,7 +45,7 @@ namespace _Tools
 			if (!Input.GetMouseButton(0))
 				return;
 
-			if (IsPointerOverUIElement())
+			if (!_dragCamera)
 				return;
 
 			Vector3 currentMousePosition = Input.mousePosition;
