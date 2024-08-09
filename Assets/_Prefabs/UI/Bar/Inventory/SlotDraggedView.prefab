@@ -236,6 +236,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotView
       objectReference: {fileID: 0}
+    - target: {fileID: 6934254681486604493, guid: e4a24510bdd676e4a860b6c6dace1fc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7942692153034821310, guid: e4a24510bdd676e4a860b6c6dace1fc2, type: 3}
       propertyPath: m_IsActive
       value: 0

@@ -17,7 +17,7 @@ namespace _Game.BarInventory
 			_image.sprite = slotData.Icon;
 
 			var slotDataPrice = slotData.Price > 0 ? slotData.Price.ToString() : "Free";
-			_price.SetText($"{slotDataPrice}");
+			_price.SetText($"{slotDataPrice}<sprite=\"icon_gold\", index=0>");
 			_count.SetText(slotData.CurrentCount.ToString());
 		}
 		public void UpdateDraggedView(BarIngredient slotData)
